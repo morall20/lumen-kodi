@@ -1,0 +1,33 @@
+name: Build Kodi update feed
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'plugin.video.lumen/**'
+      - 'repository.lumen/**'
+      - 'tools/**'
+      - '.github/workflows/build-kodi.yml'
+permissions:
+  contents: write
+concurrency:
+  group: lumen-feed-main
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify and package
+        run: |
+          python3 -m unittest discover -s plugin.video.lumen/developer -q
+          python3 -m unittest discover -s tools -p 'test_*.py' -q
+          python3 tools/build_repository.py
+      - name: Publish generated files
+        run: |
+          git add repo plugin.video.lumen/SOURCE_MANIFEST.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Build Kodi packages and update feed [skip ci]'
+          git push origin HEAD:main

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="repository.lumen" name="Lumen Repository" version="1.0.0" provider-name="morall20">
+  <extension point="xbmc.addon.repository" name="Lumen Repository">
+    <dir minversion="21.0.0">
+      <info compressed="false">https://raw.githubusercontent.com/morall20/lumen-kodi/main/repo/addons.xml</info>
+      <checksum>https://raw.githubusercontent.com/morall20/lumen-kodi/main/repo/addons.xml.md5</checksum>
+      <datadir zip="true">https://raw.githubusercontent.com/morall20/lumen-kodi/main/repo/</datadir>
+      <hashes>false</hashes>
+    </dir>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Lumen personal Kodi add-on updates</summary>
+    <description lang="en_GB">Update feed for Lumen development builds on Kodi 21 or later. Requires the GitHub distribution repository to be public; private GitHub downloads are not authenticated by this add-on.</description>
+    <platform>all</platform><license>MIT</license>
+    <website>https://github.com/morall20/lumen-kodi</website>
+    <assets><icon>resources/icon.png</icon><fanart>resources/fanart.png</fanart></assets>
+  </extension>
+</addon>

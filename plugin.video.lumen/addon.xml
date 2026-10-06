@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.lumen" name="Lumen" version="0.1.0" provider-name="Lumen Personal Project">
+  <requires><import addon="xbmc.python" version="3.0.1" /></requires>
+  <extension point="xbmc.python.pluginsource" library="default.py"><provides>video</provides></extension>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">A cinematic personal video dashboard — development build</summary>
+    <description lang="en_GB">Kodi 21 development package. Independent account setup, CocoScrapers adapter, verified availability, device filters, list widgets and context actions. Read INSTALL.md for setup and limitations.</description>
+    <platform>all</platform><license>MIT</license>
+    <assets><icon>resources/media/icon.png</icon><fanart>resources/media/fanart.png</fanart></assets>
+    <news>Initial development build. Live account and device validation pending.</news>
+  </extension>
+</addon>

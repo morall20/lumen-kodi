@@ -1,0 +1,99 @@
+{
+  "version": "0.1.0",
+  "target": "Kodi 21.3 Omega",
+  "status": "development; live/device validation pending",
+  "files": [
+    {
+      "path": "ADAPTERS.md",
+      "sha256": "1d7f71ceab0e0918b3c4c6383f9a237409b2ee52ef073248331c1b9e6de4d840"
+    },
+    {
+      "path": "INSTALL.md",
+      "sha256": "0d907f44bbb14c9fef2d6dbf6c400950194b95415307bdea8e75c6e806ff0ded"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "c862fa77cc2f3568e7bb4c296457a0e4e2f92e658f9d9317d084669dbb0f83d2"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "71009d819a954ddbe0d56d7c44ca738b2264aef07a8cf73f63b916a2a1c75eae"
+    },
+    {
+      "path": "addon.xml",
+      "sha256": "a7849ab363c819ecf8482669c0efc2404ce9d84ba6eceef0f6dca53d3b12a975"
+    },
+    {
+      "path": "default.py",
+      "sha256": "3df9ab86b6f14c0a2de454020d14a77a1ba766638c2532819113107d771ac0d5"
+    },
+    {
+      "path": "developer/test_lumen.py",
+      "sha256": "bed94e535b6a5b19626792e3d140010c93e305e094e5972aa0ac52e0dced21cc"
+    },
+    {
+      "path": "resources/lib/accounts.py",
+      "sha256": "fcd037c6498f30ca1934e163eb5cdca8af226a01a303efd66c155c8f14e1de34"
+    },
+    {
+      "path": "resources/lib/app.py",
+      "sha256": "5f5d47f8b0788dc2c61b2e2fef343f87a04e6fc5cb0c7bffb0d3c737318ece2d"
+    },
+    {
+      "path": "resources/lib/catalog.py",
+      "sha256": "9d46a36f43940d151c96f18e80a644a68dc9e46a6e135df636370818177c8456"
+    },
+    {
+      "path": "resources/lib/core.py",
+      "sha256": "e92fb88ec5d17e0bc2854e98682e8a4a27ad5949a9f5364912007d248b97e26c"
+    },
+    {
+      "path": "resources/lib/providers.py",
+      "sha256": "c97aa66b1dfa6fcfbab99b94527b94e02fb15ff9fb599ccb49679c6f24966292"
+    },
+    {
+      "path": "resources/lib/runtime.py",
+      "sha256": "7a000383a940ed8b8666d4fa00d448d2b358ceaf0568dc74e5e4007c7a402cc5"
+    },
+    {
+      "path": "resources/media/button.png",
+      "sha256": "3d2bd76565fa3b79779aaaa2b52784cacf11464cc9a018b0e79f648e0d30b5cb"
+    },
+    {
+      "path": "resources/media/fanart.png",
+      "sha256": "776ce4f565d94fcd3f4bff80f54d06b1d6abbb92f49670c96d4f9f666853ac91"
+    },
+    {
+      "path": "resources/media/focus.png",
+      "sha256": "482db3fecd50ac770767274f36bdcb2c78c67485c8ed1ea5f0e4ac23f47df6e2"
+    },
+    {
+      "path": "resources/media/icon.png",
+      "sha256": "bb289bc371ac96edf700257fe7450da52d1d122b798e38914b9a00db00ad2591"
+    },
+    {
+      "path": "resources/settings.xml",
+      "sha256": "9d40874301890ecc8b01961639664fd0054f8ec334dd12ed89097c07676253fc"
+    },
+    {
+      "path": "resources/skins/Default/720p/Home.xml",
+      "sha256": "3512592dce92bff772647bcf006cfeb96902c6b9c6989927531cc126e051f670"
+    },
+    {
+      "path": "resources/skins/Default/media/button.png",
+      "sha256": "3d2bd76565fa3b79779aaaa2b52784cacf11464cc9a018b0e79f648e0d30b5cb"
+    },
+    {
+      "path": "resources/skins/Default/media/fanart.png",
+      "sha256": "776ce4f565d94fcd3f4bff80f54d06b1d6abbb92f49670c96d4f9f666853ac91"
+    },
+    {
+      "path": "resources/skins/Default/media/focus.png",
+      "sha256": "482db3fecd50ac770767274f36bdcb2c78c67485c8ed1ea5f0e4ac23f47df6e2"
+    },
+    {
+      "path": "service.py",
+      "sha256": "9eed9f1877fc338b01f772de785e7ef05cfefd905e627da1d37c5c91cc5e65ba"
+    }
+  ]
+}

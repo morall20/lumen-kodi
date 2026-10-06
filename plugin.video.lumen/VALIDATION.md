@@ -1,0 +1,40 @@
+# Lumen 0.1.0 validation
+
+Checked October 6, 2026 in Python 3 with mocked Kodi/API boundaries. Python bytecode compilation passed. Twelve behavioral tests passed:
+
+1. Resolution separate from source type, including 4K/2K/1080p/720p.
+2. Device-local movie/episode limits and CAM exclusion.
+3. Exact episode-file matching excludes another episode and non-video files.
+4. Hash deduplication preserves provenance; case-sensitive URLs remain distinct.
+5. Unknown availability does not become confirmed readiness.
+6. Returning sources retain first-found time and baseline flag.
+7. API failure yields partial error/unknown state.
+8. Rejecting a selected-source cloud-add confirmation causes no mutation.
+9. Credentials remain outside the availability database and disconnect removes them.
+10. API HTTP/redirect rejection protects credentials from forwarding.
+11. List membership does not invent availability or list-added dates.
+12. Manifest, setting identifiers, quality options and XML navigation references.
+
+Tests use fixtures only. They do not assert that service APIs currently accept every payload, that third-party modules are safe, or that the UI loads on Kodi. Kodi is not available in the build workspace, and no live credentials were provided. Installation, visual rendering, remote/touch navigation, authentication, provider searches, playback/resume, cross-device Trakt sync, network failure behavior and hardware performance all remain unverified.
+
+Run the included offline tests from this add-on's extracted directory:
+
+```sh
+python3 -m unittest discover -s developer -v
+```
+
+No sample films or accounts are installed by these tests. Kodi imports are stubbed for the test process only.
+
+## References used for independently written integration code
+
+- Kodi settings format: https://kodi.wiki/view/Add-on_settings_conversion
+- CocoScrapers 1.0.32 module archive from https://github.com/CocoJoe2411/repository.cocoscrapers (entry points inspected as text, not executed).
+- Real-Debrid API: https://api.real-debrid.com/
+- TorBox API: https://api-docs.torbox.app/ and official SDK documentation https://github.com/TorBox-App/torbox-sdk-js
+- Premiumize API: https://www.premiumize.me/api
+- AllDebrid API: https://docs.alldebrid.com/
+- Trakt API: https://trakt.docs.apiary.io/ and https://developer.trakt.tv/docs/api-use-policy
+- MDBList API: https://api.mdblist.com/docs/
+- TMDB API: https://developer.themoviedb.org/reference
+
+FENLightPlus was used earlier as a feature reference, not as bundled executable code or a source of account/app keys. No external scraper archive is redistributed in this ZIP.
