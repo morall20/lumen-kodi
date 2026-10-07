@@ -8,6 +8,7 @@ import sys
 import tempfile
 import types
 import unittest
+import subprocess
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
@@ -132,6 +133,37 @@ class Checks(unittest.TestCase):
         controls={x.attrib['id'] for x in window.findall('./controls/control')}
         for tag in ('onleft','onright','onup','ondown'):
             for x in window.findall('.//'+tag): self.assertIn(x.text,controls)
+
+class EntrypointTests(unittest.TestCase):
+    def launch(self, action):
+        # A fresh isolated interpreter must not inherit this test suite's
+        # resources/lib sys.path or cached router/app imports.
+        script='''import sys,types,runpy
+root=%r
+class Addon:
+    def getAddonInfo(self,key):return root if key=='path' else ''
+    def openSettings(self):print('SETTINGS_OPENED')
+class Dialog:
+    def textviewer(self,*args):raise AssertionError('Unexpected launch error')
+sys.modules['xbmcaddon']=types.SimpleNamespace(Addon=Addon)
+sys.modules['xbmc']=types.SimpleNamespace(LOGERROR=4,log=lambda *args:None)
+sys.modules['xbmcgui']=types.SimpleNamespace(Dialog=Dialog)
+sys.modules['xbmcplugin']=types.SimpleNamespace(endOfDirectory=lambda *args,**kwargs:None)
+sys.modules['app']=types.SimpleNamespace(run=lambda argv:print('HOME_LAUNCHED'))
+sys.argv=['plugin://plugin.video.lumen/','1','?action='+%r]
+runpy.run_path(root+'/default.py',run_name='__main__')
+'''%(str(ROOT),action)
+        return subprocess.run([sys.executable,'-I','-c',script],capture_output=True,text=True,timeout=20)
+
+    def test_settings_entry_bootstraps_local_modules(self):
+        result=self.launch('settings')
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('SETTINGS_OPENED',result.stdout)
+
+    def test_home_entry_bootstraps_local_modules(self):
+        result=self.launch('home')
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('HOME_LAUNCHED',result.stdout)
 
 class FrameworkTests(unittest.TestCase):
     def test_explicit_route_registry_rejects_execution_names(self):

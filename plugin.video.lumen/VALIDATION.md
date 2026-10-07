@@ -46,3 +46,7 @@ The first device report described a load failure and a blank settings window. Re
 ## 0.2.0 framework stage
 
 24 add-on behavioral checks plus 4 repository packaging tests pass offline. Added explicit-route rejection, device preset credential isolation, cache preservation, Trakt pending/cancel/denial behavior, settings action mapping, recovery mode and nested Back tests. This does not establish live Kodi/API compatibility or complete FENLightPlus feature parity. See FRAMEWORK_MIGRATION.md for the targeted review and device-check scope.
+
+## 0.2.1 entrypoint correction
+
+Fresh isolated Python interpreter tests reproduced ModuleNotFoundError for the router on both home and settings entry routes in 0.2.0. Its import occurred before the add-on library path was added. Moved the import inside the guarded launch after path setup. Both new entrypoint tests pass alongside the existing 24 add-on tests and 4 packaging tests (30 total). GUI/API boundaries are still mocked; live Kodi device validation remains required. The home entrypoint test validates dispatch with a stub application, while separate GUI-boundary tests exercise the dashboard.

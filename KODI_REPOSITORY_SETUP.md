@@ -2,7 +2,7 @@
 
 ## Public update feed
 
-The GitHub repository is public, and the standard repository ZIP points to its `main/repo/` feed. No GitHub login is needed by Kodi. Download and install the repository ZIP once per device, then use Install from repository. Lumen 0.2.0 is the current development package; live device verification is still pending.
+The GitHub repository is public, and the standard repository ZIP points to its `main/repo/` feed. No GitHub login is needed by Kodi. Download and install the repository ZIP once per device, then use Install from repository. Lumen 0.2.1 is the current development package; live device verification is still pending.
 
 ## Install once on each device
 

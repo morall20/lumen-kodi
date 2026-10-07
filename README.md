@@ -6,7 +6,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 
 ## Downloads
 
-- [Lumen 0.2.0 migration ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.2.0.zip)
+- [Lumen 0.2.1 development ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.2.1.zip)
 - [Lumen Repository 1.0.1 ZIP](repo/repository.lumen/repository.lumen-1.0.1.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
@@ -28,3 +28,7 @@ Private hosting can instead use a separately designed authenticated updater or p
 ## Framework migration
 
 The 0.2.0 original-code framework migration is published on main as a development update. See [implemented changes and remaining work](FRAMEWORK_MIGRATION.md). Its offline checks passed; device installation, rendering, live authentication and playback still need confirmation. Earlier numbered packages remain available for manual rollback.
+
+### 0.2.1 startup fix
+
+Corrected a router import that ran before the add-on library path was initialized. Added two fresh-interpreter entrypoint regression tests that fail against 0.2.0 and pass against this patch. Install the 0.2.1 ZIP directly for immediate recovery if Kodi still offers a cached older package. Device confirmation is still required.

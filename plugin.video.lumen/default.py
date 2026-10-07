@@ -4,13 +4,13 @@ import xbmcaddon
 import xbmc
 import xbmcgui
 import xbmcplugin
-import router
 
 ADDON = xbmcaddon.Addon()
 sys.path.insert(0, os.path.join(ADDON.getAddonInfo('path'), 'resources', 'lib'))
 from diagnostics import failure_report
 
 try:
+    import router
     action, params = router.parse(sys.argv)
     if action == 'settings':
         # Settings remain accessible even when dashboard initialization fails.
