@@ -7,7 +7,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 ## Downloads
 
 - [Lumen 0.2.0 migration ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.2.0.zip)
-- [Lumen Repository 1.0.0 ZIP](repo/repository.lumen/repository.lumen-1.0.0.zip)
+- [Lumen Repository 1.0.1 ZIP](repo/repository.lumen/repository.lumen-1.0.1.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
 The repository ZIP points at this project's public `main/repo/` distribution feed. Kodi can download its index and packages without a GitHub login. No account credentials are included in the installer or source.

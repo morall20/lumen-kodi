@@ -73,6 +73,10 @@ def build():
     ET.indent(index, space='  ')
     data = ET.tostring(index, encoding='utf-8', xml_declaration=True) + b'\n'
     (feed / 'addons.xml').write_bytes(data)
+    # Fresh feed paths let repository 1.0.1 bypass a previously cached index.
+    # Keep the original paths for installed repository 1.0.0 clients.
+    (feed / 'catalog.xml').write_bytes(data)
+    (feed / 'catalog.xml.sha256').write_text(hashlib.sha256(data).hexdigest() + '\n')
     # This is Kodi's change marker, not a cryptographic authenticity signature.
     (feed / 'addons.xml.md5').write_text(hashlib.md5(data).hexdigest() + '\n')
     (feed / 'package-sha256.json').write_text(json.dumps(checksums, indent=2) + '\n')
