@@ -39,7 +39,7 @@ def request(url, method='GET', params=None, data=None, headers=None, form=False)
         raise ApiError(429, 'cooldown', int(_cooldowns[host] - time.time()) + 1)
     if params:
         url += ('&' if '?' in url else '?') + urlencode(params, doseq=True)
-    h = {'User-Agent': 'Lumen/0.1.0', 'Accept': 'application/json'}
+    h = {'User-Agent': 'Lumen/'+ADDON.getAddonInfo('version'), 'Accept': 'application/json'}
     h.update(headers or {})
     body = None
     if data is not None:

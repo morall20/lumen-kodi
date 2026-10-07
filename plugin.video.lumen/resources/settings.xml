@@ -1,2 +1,248 @@
 <?xml version='1.0' encoding='utf-8'?>
-<settings version="1"><section id="plugin.video.lumen"><category id="category0" label="Home"><group id="1"><setting id="refresh_startup" type="boolean" label="Refresh on every startup"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="refresh_limit" type="integer" label="Titles checked per startup/reload"><level>0</level><default>6</default><constraints><minimum>1</minimum><maximum>30</maximum><step>1</step></constraints><control type="spinner" format="integer" /></setting><setting id="discovery" type="string" label="Discovery order"><level>0</level><default>trending</default><constraints><options><option label="trending">trending</option><option label="popular">popular</option><option label="latest">latest</option></options></constraints><control type="list" format="string" /></setting><setting id="list_widgets" type="boolean" label="Use selected MDBList / Trakt reference lists"><level>0</level><default>false</default><control type="toggle" /></setting><setting id="lists_only" type="boolean" label="Restrict refresh candidate pool to selected lists"><level>0</level><default>false</default><control type="toggle" /></setting></group></category><category id="category1" label="Movie quality"><group id="2"><setting id="movie.4k" type="boolean" label="Allow 4K / 2160p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="movie.2k" type="boolean" label="Allow 2K / 1440p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="movie.1080" type="boolean" label="Allow 1080p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="movie.720" type="boolean" label="Allow 720p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="movie.max_gb" type="integer" label="Maximum movie size (GB)"><level>0</level><default>30</default><constraints><minimum>1</minimum><maximum>200</maximum><step>1</step></constraints><control type="spinner" format="integer" /></setting></group></category><category id="category2" label="Episode quality"><group id="3"><setting id="episode.4k" type="boolean" label="Allow 4K / 2160p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="episode.2k" type="boolean" label="Allow 2K / 1440p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="episode.1080" type="boolean" label="Allow 1080p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="episode.720" type="boolean" label="Allow 720p"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="episode.max_gb" type="integer" label="Maximum episode size (GB)"><level>0</level><default>8</default><constraints><minimum>1</minimum><maximum>100</maximum><step>1</step></constraints><control type="spinner" format="integer" /></setting></group></category><category id="category3" label="Formats"><group id="4"><setting id="screeners" type="boolean" label="Include screeners (watermarks/quality may vary)"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="unknown_quality" type="boolean" label="Include unknown / SD resolution"><level>0</level><default>false</default><control type="toggle" /></setting><setting id="unknown_size" type="boolean" label="Include sources with unknown size"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="hdr" type="boolean" label="Allow HDR"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="dv" type="boolean" label="Allow Dolby Vision"><level>0</level><default>false</default><control type="toggle" /></setting><setting id="hevc" type="boolean" label="Allow HEVC / H.265"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="av1" type="boolean" label="Allow AV1"><level>0</level><default>false</default><control type="toggle" /></setting></group></category><category id="category4" label="Sources"><group id="5"><setting id="ready_only" type="boolean" label="Show confirmed sources only (RD coverage limited)"><level>0</level><default>false</default><control type="toggle" /></setting><setting id="shortlist" type="integer" label="Recommended source count"><level>0</level><default>3</default><constraints><minimum>1</minimum><maximum>10</maximum><step>1</step></constraints><control type="spinner" format="integer" /></setting><setting id="search_timeout" type="integer" label="Provider search deadline (seconds)"><level>0</level><default>20</default><constraints><minimum>5</minimum><maximum>45</maximum><step>1</step></constraints><control type="spinner" format="integer" /></setting><setting id="coco.enabled" type="boolean" label="Enable CocoScrapers adapter"><level>0</level><default>true</default><control type="toggle" /></setting></group></category><category id="category5" label="Accounts"><group id="6"><setting id="rd.enabled" type="boolean" label="Enable Real-Debrid"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="tb.enabled" type="boolean" label="Enable TorBox"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="pm.enabled" type="boolean" label="Enable Premiumize"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="ad.enabled" type="boolean" label="Enable AllDebrid account checks (playback pending)"><level>0</level><default>true</default><control type="toggle" /></setting><setting id="trakt.scrobble" type="boolean" label="Report Lumen playback to Trakt (disable other tracker)"><level>0</level><default>false</default><control type="toggle" /></setting></group></category><category id="category6" label="Appearance"><group id="7"><setting id="language" type="string" label="Catalog language"><level>0</level><default>en-US</default><constraints><options><option label="en-US">en-US</option><option label="en-GB">en-GB</option><option label="es-ES">es-ES</option><option label="fr-FR">fr-FR</option><option label="de-DE">de-DE</option></options></constraints><control type="list" format="string" /></setting><setting id="device_name" type="string" label="Device profile name (local only)"><level>0</level><default>My Kodi device</default><constraints><allowempty>false</allowempty></constraints><control type="edit" format="string" /></setting></group></category></section></settings>
+<settings version="1">
+  <section id="plugin.video.lumen">
+    <category id="category0" label="32000">
+      <group id="1">
+        <setting id="refresh_startup" type="boolean" label="32001">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="refresh_limit" type="integer" label="32002">
+          <level>0</level>
+          <default>6</default>
+          <constraints>
+            <minimum>1</minimum>
+            <maximum>30</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+        <setting id="discovery" type="string" label="32003">
+          <level>0</level>
+          <default>trending</default>
+          <constraints>
+            <options>
+              <option label="32004">trending</option>
+              <option label="32005">popular</option>
+              <option label="32006">latest</option>
+            </options>
+          </constraints>
+          <control type="list" format="string">
+            <heading>32003</heading>
+          </control>
+        </setting>
+        <setting id="list_widgets" type="boolean" label="32007">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="lists_only" type="boolean" label="32008">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+    <category id="category1" label="32009">
+      <group id="2">
+        <setting id="movie.4k" type="boolean" label="32010">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="movie.2k" type="boolean" label="32011">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="movie.1080" type="boolean" label="32012">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="movie.720" type="boolean" label="32013">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="movie.max_gb" type="integer" label="32014">
+          <level>0</level>
+          <default>30</default>
+          <constraints>
+            <minimum>1</minimum>
+            <maximum>200</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+      </group>
+    </category>
+    <category id="category2" label="32015">
+      <group id="3">
+        <setting id="episode.4k" type="boolean" label="32010">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="episode.2k" type="boolean" label="32011">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="episode.1080" type="boolean" label="32012">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="episode.720" type="boolean" label="32013">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="episode.max_gb" type="integer" label="32016">
+          <level>0</level>
+          <default>8</default>
+          <constraints>
+            <minimum>1</minimum>
+            <maximum>100</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+      </group>
+    </category>
+    <category id="category3" label="32017">
+      <group id="4">
+        <setting id="screeners" type="boolean" label="32018">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="unknown_quality" type="boolean" label="32019">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="unknown_size" type="boolean" label="32020">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="hdr" type="boolean" label="32021">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="dv" type="boolean" label="32022">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="hevc" type="boolean" label="32023">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="av1" type="boolean" label="32024">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+    <category id="category4" label="32025">
+      <group id="5">
+        <setting id="ready_only" type="boolean" label="32026">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="shortlist" type="integer" label="32027">
+          <level>0</level>
+          <default>3</default>
+          <constraints>
+            <minimum>1</minimum>
+            <maximum>10</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+        <setting id="search_timeout" type="integer" label="32028">
+          <level>0</level>
+          <default>20</default>
+          <constraints>
+            <minimum>5</minimum>
+            <maximum>45</maximum>
+            <step>1</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+        <setting id="coco.enabled" type="boolean" label="32029">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+    <category id="category5" label="32030">
+      <group id="6">
+        <setting id="rd.enabled" type="boolean" label="32031">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="tb.enabled" type="boolean" label="32032">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="pm.enabled" type="boolean" label="32033">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="ad.enabled" type="boolean" label="32034">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="trakt.scrobble" type="boolean" label="32035">
+          <level>0</level>
+          <default>false</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+    <category id="category6" label="32036">
+      <group id="7">
+        <setting id="language" type="string" label="32037">
+          <level>0</level>
+          <default>en-US</default>
+          <constraints>
+            <options>
+              <option label="32038">en-US</option>
+              <option label="32039">en-GB</option>
+              <option label="32040">es-ES</option>
+              <option label="32041">fr-FR</option>
+              <option label="32042">de-DE</option>
+            </options>
+          </constraints>
+          <control type="list" format="string">
+            <heading>32037</heading>
+          </control>
+        </setting>
+        <setting id="device_name" type="string" label="32043">
+          <level>0</level>
+          <default>My Kodi device</default>
+          <constraints>
+            <allowempty>false</allowempty>
+          </constraints>
+          <control type="edit" format="string">
+            <heading>32043</heading>
+          </control>
+        </setting>
+      </group>
+    </category>
+  </section>
+</settings>

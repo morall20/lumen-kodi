@@ -38,3 +38,7 @@ No sample films or accounts are installed by these tests. Kodi imports are stubb
 - TMDB API: https://developer.themoviedb.org/reference
 
 FENLightPlus was used earlier as a feature reference, not as bundled executable code or a source of account/app keys. No external scraper archive is redistributed in this ZIP.
+
+## 0.1.1 startup/settings correction
+
+The first device report described a load failure and a blank settings window. Renamed the dashboard to `script-lumen-home.xml` because Kodi checks the active skin before the add-on fallback; `Home.xml` can load the skin home window with incompatible controls. Replaced category/setting labels with numeric localization IDs and bundled English strings. Added credential-free failure reports, guarded dashboard initialization, and settings routing that does not import the dashboard. These defects were identified from source; the user crash log was not available. The corrected ZIP still requires on-device confirmation. Repository hosting remains private pending owner approval.

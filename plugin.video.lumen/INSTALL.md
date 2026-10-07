@@ -1,10 +1,10 @@
-# Lumen 0.1.0 — Kodi 21 development build
+# Lumen 0.1.1 — Kodi 21 development build
 
 This is an installable-format development ZIP, not the completed production add-on. It contains original readable Python/XML source and a native cinematic dashboard. Kodi installation/rendering, real accounts, real CocoScrapers searches, and playback have **not** been validated on a device. Start on the Shield TV Pro and keep your current working add-on until testing succeeds.
 
 ## Install
 
-1. Download **plugin.video.lumen-0.1.0-dev.zip** to the Shield or copy it there from your computer. Do not unzip it for Kodi installation.
+1. Download **plugin.video.lumen-0.1.1.zip** to the Shield or copy it there from your computer. Do not unzip it for Kodi installation.
 2. In Kodi 21.3, open Settings → System → Add-ons → Unknown sources. Enable this to permit a personal ZIP installation.
 3. Open Add-ons → Install from zip file and select this ZIP.
 4. Open Video add-ons → Lumen. The dashboard opens when Lumen is selected; this version does not automatically launch its dashboard every time Kodi starts.

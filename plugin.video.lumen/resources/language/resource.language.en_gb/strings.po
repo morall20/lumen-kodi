@@ -1,0 +1,181 @@
+msgid ""
+msgstr ""
+"Language: en_GB\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgctxt "#32000"
+msgid "Home"
+msgstr ""
+
+msgctxt "#32001"
+msgid "Refresh on every startup"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Titles checked per startup/reload"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Discovery order"
+msgstr ""
+
+msgctxt "#32004"
+msgid "trending"
+msgstr ""
+
+msgctxt "#32005"
+msgid "popular"
+msgstr ""
+
+msgctxt "#32006"
+msgid "latest"
+msgstr ""
+
+msgctxt "#32007"
+msgid "Use selected MDBList / Trakt reference lists"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Restrict refresh candidate pool to selected lists"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Movie quality"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Allow 4K / 2160p"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Allow 2K / 1440p"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Allow 1080p"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Allow 720p"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Maximum movie size (GB)"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Episode quality"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Maximum episode size (GB)"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Formats"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Include screeners (watermarks/quality may vary)"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Include unknown / SD resolution"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Include sources with unknown size"
+msgstr ""
+
+msgctxt "#32021"
+msgid "Allow HDR"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Allow Dolby Vision"
+msgstr ""
+
+msgctxt "#32023"
+msgid "Allow HEVC / H.265"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Allow AV1"
+msgstr ""
+
+msgctxt "#32025"
+msgid "Sources"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Show confirmed sources only (RD coverage limited)"
+msgstr ""
+
+msgctxt "#32027"
+msgid "Recommended source count"
+msgstr ""
+
+msgctxt "#32028"
+msgid "Provider search deadline (seconds)"
+msgstr ""
+
+msgctxt "#32029"
+msgid "Enable CocoScrapers adapter"
+msgstr ""
+
+msgctxt "#32030"
+msgid "Accounts"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Enable Real-Debrid"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Enable TorBox"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Enable Premiumize"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Enable AllDebrid account checks (playback pending)"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Report Lumen playback to Trakt (disable other tracker)"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Appearance"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Catalog language"
+msgstr ""
+
+msgctxt "#32038"
+msgid "en-US"
+msgstr ""
+
+msgctxt "#32039"
+msgid "en-GB"
+msgstr ""
+
+msgctxt "#32040"
+msgid "es-ES"
+msgstr ""
+
+msgctxt "#32041"
+msgid "fr-FR"
+msgstr ""
+
+msgctxt "#32042"
+msgid "de-DE"
+msgstr ""
+
+msgctxt "#32043"
+msgid "Device profile name (local only)"
+msgstr ""
+

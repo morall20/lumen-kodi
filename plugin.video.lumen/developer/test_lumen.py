@@ -128,9 +128,75 @@ class Checks(unittest.TestCase):
         self.assertEqual(len(ids),len(set(ids)))
         for id_ in ['movie.4k','movie.2k','movie.1080','movie.720','episode.2k']:
             self.assertIn(id_,ids)
-        window=ET.parse(ROOT/'resources/skins/Default/720p/Home.xml').getroot()
+        window=ET.parse(ROOT/'resources/skins/Default/720p/script-lumen-home.xml').getroot()
         controls={x.attrib['id'] for x in window.findall('./controls/control')}
         for tag in ('onleft','onright','onup','ondown'):
             for x in window.findall('.//'+tag): self.assertIn(x.text,controls)
+
+class StartupRegressionTests(unittest.TestCase):
+    def test_settings_labels_have_bundled_localization(self):
+        settings=ET.parse(ROOT/'resources/settings.xml').getroot()
+        po=(ROOT/'resources/language/resource.language.en_gb/strings.po').read_text()
+        for node in settings.iter():
+            label=node.get('label')
+            if label:
+                self.assertTrue(label.isdigit(), 'Kodi labels must reference localized strings')
+                self.assertIn('msgctxt "#'+label+'"',po)
+        for control in settings.findall('.//control'):
+            if control.get('type') in ('edit','list'):
+                self.assertTrue(control.findtext('heading').isdigit())
+
+    def load_app(self):
+        from unittest.mock import MagicMock
+        class SkinWindow:
+            instances=[]
+            def __init__(self,filename,path,*args):
+                self.filename=filename
+                self.controls={}
+                self.was_closed=False
+                self.instances.append(self)
+                # Model Kodi's active-skin-first resolution: Home.xml is the
+                # skin's window, which does not have Lumen's control IDs.
+                if filename=='Home.xml':
+                    ids=['1']
+                else:
+                    ids=[x.get('id') for x in ET.parse(Path(path)/'resources/skins/Default/720p'/filename).findall('./controls/control')]
+                for id_ in ids:
+                    control=MagicMock()
+                    control.getSelectedPosition.return_value=-1
+                    self.controls[int(id_)]=control
+            def getControl(self,id_):return self.controls[id_]
+            def setFocusId(self,id_):self.focus=id_
+            def close(self):self.was_closed=True
+            def doModal(self):self.onInit()
+        dialog=MagicMock()
+        modules={'xbmc':types.SimpleNamespace(Monitor=MagicMock(),LOGERROR=4,log=MagicMock()),
+                 'xbmcgui':types.SimpleNamespace(WindowXMLDialog=SkinWindow,Dialog=lambda:dialog),
+                 'xbmcplugin':MagicMock()}
+        context=patch.dict(sys.modules,modules)
+        context.start();self.addCleanup(context.stop)
+        spec=importlib.util.spec_from_file_location('lumen_app_fixture',ROOT/'resources/lib/app.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        return module,SkinWindow,dialog
+
+    def test_cold_start_uses_addon_window_with_empty_library(self):
+        app,windows,dialog=self.load_app()
+        with patch.object(app,'flag',return_value=False),patch.object(app.catalog,'available',return_value=[]):
+            app.run(['plugin://plugin.video.lumen/','-1',''])
+        window=windows.instances[-1]
+        self.assertEqual(window.filename,'script-lumen-home.xml')
+        self.assertIsNone(window.startup_error)
+        self.assertEqual(window.focus,20)
+        window.controls[4].setLabel.assert_called_once()
+        dialog.textviewer.assert_not_called()
+
+    def test_initialization_failure_closes_and_reports(self):
+        app,windows,dialog=self.load_app()
+        with patch.object(app.catalog,'available',side_effect=ValueError('secret-token-must-not-be-reported')):
+            app.run(['plugin://plugin.video.lumen/','-1',''])
+        self.assertTrue(windows.instances[-1].was_closed)
+        report=dialog.textviewer.call_args.args[1]
+        self.assertIn('ValueError',report)
+        self.assertNotIn('secret-token',report)
 
 if __name__=='__main__': unittest.main(verbosity=2)

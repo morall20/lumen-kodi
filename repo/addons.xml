@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <addons>
-  <addon id="plugin.video.lumen" name="Lumen" version="0.1.0" provider-name="Lumen Personal Project">
+  <addon id="plugin.video.lumen" name="Lumen" version="0.1.1" provider-name="Lumen Personal Project">
     <requires>
       <import addon="xbmc.python" version="3.0.1" />
     </requires>
@@ -17,7 +17,7 @@
         <icon>resources/media/icon.png</icon>
         <fanart>resources/media/fanart.png</fanart>
       </assets>
-      <news>Initial development build. Live account and device validation pending.</news>
+      <news>Fix settings localization and skin Home.xml collision. Device validation pending.</news>
     </extension>
   </addon>
   <addon id="repository.lumen" name="Lumen Repository" version="1.0.0" provider-name="morall20">

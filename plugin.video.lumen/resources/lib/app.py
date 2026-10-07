@@ -14,6 +14,7 @@ from runtime import ADDON, read, write, credential, request, ApiError, preferenc
 from accounts import SERVICES, active_services, validate, resolve, tmdb, mdb, trakt
 import catalog
 import providers
+from diagnostics import failure_report
 
 DIALOG = xbmcgui.Dialog()
 MONITOR = xbmc.Monitor()
@@ -332,6 +333,15 @@ def provider_setup():
 
 class Home(xbmcgui.WindowXMLDialog):
     def onInit(self):
+        try:
+            self.initialize()
+        except Exception as error:
+            self.startup_error = failure_report(error, 'dashboard initialization')
+            xbmc.log(self.startup_error, xbmc.LOGERROR)
+            self.closed = True
+            self.close()
+
+    def initialize(self):
         self.media=[]
         self.running=False
         self.closed=False
@@ -447,11 +457,16 @@ def run(argv):
     q={k:v[0] for k,v in parse_qs(argv[2][1:] if len(argv)>2 else '').items()}
     action=q.get('action','home')
     if action=='home':
-        window=Home('Home.xml',ADDON.getAddonInfo('path'),'Default','720p')
+        # Kodi checks the active skin first. Home.xml would load the skin's
+        # own home window instead of Lumen's packaged controls.
+        window=Home('script-lumen-home.xml',ADDON.getAddonInfo('path'),'Default','720p')
+        window.startup_error=None
         try:
             window.doModal()
         finally:
             window.closed=True
+        if window.startup_error:
+            DIALOG.textviewer('Lumen dashboard failed',window.startup_error+'\n\nOpen Lumen Information → Configure to access settings.')
         del window
     elif action=='accounts':
         connect()
@@ -462,4 +477,7 @@ def run(argv):
     if len(argv)>1 and str(argv[1]).lstrip('-').isdigit() and int(argv[1])>=0:
         handle=int(argv[1])
         xbmcplugin.addDirectoryItem(handle,url('home'),xbmcgui.ListItem('Open Lumen dashboard'),True)
+        xbmcplugin.addDirectoryItem(handle,url('accounts'),xbmcgui.ListItem('Accounts'),True)
+        xbmcplugin.addDirectoryItem(handle,url('providers'),xbmcgui.ListItem('Providers'),True)
+        xbmcplugin.addDirectoryItem(handle,url('settings'),xbmcgui.ListItem('Settings'),True)
         xbmcplugin.endOfDirectory(handle,succeeded=True,cacheToDisc=False)

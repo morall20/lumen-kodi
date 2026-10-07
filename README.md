@@ -6,7 +6,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 
 ## Downloads
 
-- [Lumen 0.1.0 installation ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.1.0.zip)
+- [Lumen 0.1.1 installation ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.1.1.zip)
 - [Lumen Repository 1.0.0 ZIP](repo/repository.lumen/repository.lumen-1.0.0.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
