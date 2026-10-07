@@ -179,3 +179,75 @@ msgctxt "#32043"
 msgid "Device profile name (local only)"
 msgstr ""
 
+msgctxt "#32100"
+msgid "Connect TMDB catalog"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Set up personal Trakt application"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Activate Trakt"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Connect MDBList"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Connect Real-Debrid"
+msgstr ""
+
+msgctxt "#32105"
+msgid "Connect TorBox"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Connect Premiumize"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Connect AllDebrid (playback pending)"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Choose startup reference lists"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Disconnect an account"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Tools and recovery"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Manage source providers and modules"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Apply device starting preferences"
+msgstr ""
+
+msgctxt "#32113"
+msgid "View setup and sync status"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Clear discovery and search caches"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Startup navigation"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Cinematic dashboard"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Recovery menu"
+msgstr ""
+

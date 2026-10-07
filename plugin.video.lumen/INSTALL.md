@@ -1,10 +1,10 @@
-# Lumen 0.1.1 — Kodi 21 development build
+# Lumen 0.2.0 — Kodi 21 development build
 
 This is an installable-format development ZIP, not the completed production add-on. It contains original readable Python/XML source and a native cinematic dashboard. Kodi installation/rendering, real accounts, real CocoScrapers searches, and playback have **not** been validated on a device. Start on the Shield TV Pro and keep your current working add-on until testing succeeds.
 
 ## Install
 
-1. Download **plugin.video.lumen-0.1.1.zip** to the Shield or copy it there from your computer. Do not unzip it for Kodi installation.
+1. Download **plugin.video.lumen-0.2.0.zip** to the Shield or copy it there from your computer. Do not unzip it for Kodi installation.
 2. In Kodi 21.3, open Settings → System → Add-ons → Unknown sources. Enable this to permit a personal ZIP installation.
 3. Open Add-ons → Install from zip file and select this ZIP.
 4. Open Video add-ons → Lumen. The dashboard opens when Lumen is selected; this version does not automatically launch its dashboard every time Kodi starts.
@@ -91,3 +91,7 @@ Report the exact error plus device/Kodi/skin and step number. Share credentials 
 ## Remove / roll back
 
 Kodi → Add-ons → My add-ons → Video add-ons → Lumen → Uninstall. Remove its profile data when Kodi offers that option if you want to erase saved credentials and observations. There is no previous Lumen release to roll back to; your existing unrelated add-ons/build are not replaced. Reinstalling this same ZIP does not clear profile data by itself.
+
+## 0.2.0 setup and recovery
+
+Kodi Information → Configure now has direct account setup/activation, provider, preset, cache and status actions. Tools and recovery → Startup navigation can choose Recovery menu. This is a setup fallback, not an alternative movie browser. Presets are editable starting values; account credentials remain local. Back navigation now returns through the current TV/list hierarchy. Full feature parity with FENLightPlus remains pending; see FRAMEWORK_MIGRATION.md in the source repository. The migration ZIP is installed directly while its branch is under device testing.

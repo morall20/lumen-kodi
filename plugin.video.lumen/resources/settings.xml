@@ -212,6 +212,56 @@
           <default>false</default>
           <control type="toggle" />
         </setting>
+        <setting id="setup.tmdb" type="action" label="32100">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=tmdb)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.trakt_app" type="action" label="32101">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=trakt_setup)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.trakt" type="action" label="32102">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=trakt)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.mdb" type="action" label="32103">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=mdb)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.rd" type="action" label="32104">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=rd)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.tb" type="action" label="32105">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=tb)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.pm" type="action" label="32106">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=pm)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.ad" type="action" label="32107">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=ad)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.lists" type="action" label="32108">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=lists)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="setup.disconnect" type="action" label="32109">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=account&amp;service=disconnect)</data>
+          <control type="button" format="action" />
+        </setting>
       </group>
     </category>
     <category id="category6" label="32036">
@@ -240,6 +290,43 @@
           </constraints>
           <control type="edit" format="string">
             <heading>32043</heading>
+          </control>
+        </setting>
+      </group>
+    </category>
+    <category id="tools" label="32110">
+      <group id="8">
+        <setting id="tools.providers" type="action" label="32111">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=providers)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="tools.device" type="action" label="32112">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=device)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="tools.status" type="action" label="32113">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=status)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="tools.cache" type="action" label="32114">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=clear_cache)</data>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="home.mode" type="string" label="32115">
+          <level>0</level>
+          <default>dashboard</default>
+          <constraints>
+            <options>
+              <option label="32116">dashboard</option>
+              <option label="32117">recovery</option>
+            </options>
+          </constraints>
+          <control type="list" format="string">
+            <heading>32115</heading>
           </control>
         </setting>
       </group>

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.2.0",
   "target": "Kodi 21.3 Omega",
   "status": "development; live/device validation pending",
   "files": [
@@ -9,7 +9,7 @@
     },
     {
       "path": "INSTALL.md",
-      "sha256": "c9756463131a220df3646479dc1d3c38761ae8957c3c0361ca41836219b3ccc8"
+      "sha256": "698ae22f8b2f4e5efc66b43b04359022953df69137c5715ba22f191a62d9daec"
     },
     {
       "path": "LICENSE",
@@ -17,31 +17,35 @@
     },
     {
       "path": "VALIDATION.md",
-      "sha256": "d5dcc2b2c6889648a8bf9762b548f147e5a2c788e3a2fc9bb532c8c4fb09fd66"
+      "sha256": "a6ede0e905ad9b28ac7c2f02fd824290a0f8d12e77ee35724b99e8fa8e65268a"
     },
     {
       "path": "addon.xml",
-      "sha256": "5ba42aacca31bf0682357aa377d1aed5959780d8785e9d25f67391b2a5fe13d6"
+      "sha256": "0b8355d04911e9d98a0709afc9c3c3316d3000a353d527644f1908edad093e5d"
     },
     {
       "path": "default.py",
-      "sha256": "8dcab752d3277ccef93e6a61f1895ccf9794abde9223e92cc8ab60221b84639e"
+      "sha256": "2faeea3e50e4ab3af3a56a89288adf0d42ff8fc709256325a9cf781bb2025549"
     },
     {
       "path": "developer/test_lumen.py",
-      "sha256": "400eb931b1a8c7356204c62f8b2184bf1c90fdf5027b6ff00eecb067ae97778c"
+      "sha256": "9065464188342793bcb8fdf6526bc3be9504fecf235b40f7e0f54cf4cca05bb2"
     },
     {
       "path": "resources/language/resource.language.en_gb/strings.po",
-      "sha256": "6436abfc19e679aef8e44c7740acff22fffb73fb6f31f3f87ab2606b7fee176c"
+      "sha256": "4fcba4ecce3bf86900c74cc16c25009086c24f81c07036ca6d5c8026b8e8f360"
     },
     {
       "path": "resources/lib/accounts.py",
       "sha256": "fcd037c6498f30ca1934e163eb5cdca8af226a01a303efd66c155c8f14e1de34"
     },
     {
+      "path": "resources/lib/activation.py",
+      "sha256": "59e191c73e63b548658e1883f214e41d2eda41dfd5715f11b8404bfba7e7d3db"
+    },
+    {
       "path": "resources/lib/app.py",
-      "sha256": "bde95216606dc4b568d713106a78c1e2a21f175626534ffd87ca84b4455b3cc0"
+      "sha256": "aabdf43c1d88e6af2020527955203c4fbd86f0e5a3c9c4fc3372e979f33fcdd7"
     },
     {
       "path": "resources/lib/catalog.py",
@@ -56,8 +60,16 @@
       "sha256": "877e7725f39f74eefb1b154e67af7171c0e83d7be9ae63c07e0f37931c29a138"
     },
     {
+      "path": "resources/lib/framework.py",
+      "sha256": "b907aea3f0ffc3d1c6e309088d3da5e8fb7bcbbd6eae3d711e90ea354afd75cb"
+    },
+    {
       "path": "resources/lib/providers.py",
       "sha256": "c97aa66b1dfa6fcfbab99b94527b94e02fb15ff9fb599ccb49679c6f24966292"
+    },
+    {
+      "path": "resources/lib/router.py",
+      "sha256": "e9dc02a05337dc0ea85806ac80c4d27d6bfd951ec9fe52757302e65602f2cf4c"
     },
     {
       "path": "resources/lib/runtime.py",
@@ -81,11 +93,11 @@
     },
     {
       "path": "resources/settings.xml",
-      "sha256": "ff30ceb9a180f2ad84585acdcf87438583575d9f5ebc08e8a9bf481de0aef879"
+      "sha256": "d90b876b362e03e2dc0f2e79f3e96706193fc5000664de400dee479823f065bb"
     },
     {
       "path": "resources/skins/Default/720p/script-lumen-home.xml",
-      "sha256": "a0c3f999fffca0c25e890e7ec1b0246be60c84ae69b1fd28430c4b23dada1004"
+      "sha256": "6f9af581dc0dfd87b45f894f13dd65655324951d211d29f6ed4ada00f6fa31cb"
     },
     {
       "path": "resources/skins/Default/media/button.png",
@@ -101,7 +113,7 @@
     },
     {
       "path": "service.py",
-      "sha256": "9eed9f1877fc338b01f772de785e7ef05cfefd905e627da1d37c5c91cc5e65ba"
+      "sha256": "41810f1571c8c709479e0147ef98e482b17d30e940fca778af950a23808620a4"
     }
   ]
 }

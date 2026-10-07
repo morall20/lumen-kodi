@@ -2,7 +2,7 @@ name: Build Kodi update feed
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, framework-migration]
     paths:
       - 'plugin.video.lumen/**'
       - 'repository.lumen/**'
@@ -24,6 +24,7 @@ jobs:
           python3 -m unittest discover -s tools -p 'test_*.py' -q
           python3 tools/build_repository.py
       - name: Publish generated files
+        if: github.ref == 'refs/heads/main'
         run: |
           git add repo plugin.video.lumen/SOURCE_MANIFEST.json
           if git diff --cached --quiet; then exit 0; fi

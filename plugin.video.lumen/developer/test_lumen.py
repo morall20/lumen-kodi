@@ -133,6 +133,70 @@ class Checks(unittest.TestCase):
         for tag in ('onleft','onright','onup','ondown'):
             for x in window.findall('.//'+tag): self.assertIn(x.text,controls)
 
+class FrameworkTests(unittest.TestCase):
+    def test_explicit_route_registry_rejects_execution_names(self):
+        import router
+        self.assertEqual(router.parse(['plugin://lumen','1','?action=account&service=tb']),('account',{'service':'tb'}))
+        for route in ('eval','__import__','delete_accounts'):
+            with self.assertRaises(ValueError):router.parse(['plugin://lumen','1','?action='+route])
+        with self.assertRaises(ValueError):router.parse(['plugin://lumen','1','?'+'x'*8193])
+
+    def test_device_presets_keep_accounts_and_all_quality_controls(self):
+        import framework
+        runtime.credential('rd',{'token':'fixture'})
+        try:
+            framework.apply_device('galaxy_ultra')
+            self.assertEqual(runtime.setting('movie.max_gb'),'6')
+            self.assertFalse(runtime.flag('movie.4k'))
+            self.assertTrue(runtime.flag('movie.2k'))
+            self.assertTrue(runtime.flag('movie.1080'))
+            self.assertTrue(runtime.flag('movie.720'))
+            self.assertEqual(runtime.credential('rd')['token'],'fixture')
+        finally:
+            Addon.settings={}
+            runtime.credential('rd',remove=True)
+
+    def test_cache_clear_preserves_resume_watchlists_and_arrival_history(self):
+        import framework
+        for key in ('catalog:movie','search:movie','resume:movie','watchlist','availability'):
+            runtime.write(key,{'fixture':True})
+        framework.clear_cache()
+        self.assertIsNone(runtime.read('catalog:movie'))
+        self.assertIsNone(runtime.read('search:movie'))
+        for key in ('resume:movie','watchlist','availability'):
+            self.assertEqual(runtime.read(key),{'fixture':True})
+        with runtime.db() as connection:connection.execute('DELETE FROM state')
+
+    def test_activation_pending_then_success_waits_for_interval(self):
+        import activation
+        now=[0];waits=[]
+        def wait(delay):now[0]+=delay;waits.append(delay);return False
+        code={'verification_url':'https://trakt.tv/activate','user_code':'fixture','device_code':'private','interval':5,'expires_in':60}
+        token={'access_token':'fixture','refresh_token':'refresh','expires_in':100}
+        with patch.object(activation,'request',side_effect=[code,runtime.ApiError(400),token]):
+            result=activation.activate_trakt({'client_id':'app','client_secret':'private'},lambda *a:None,lambda:False,wait,lambda:now[0])
+        self.assertEqual(result['access_token'],'fixture')
+        self.assertEqual(waits,[5,5])
+
+    def test_activation_cancel_stores_no_tokens(self):
+        import activation
+        code={'verification_url':'https://trakt.tv/activate','user_code':'fixture','device_code':'private','interval':5,'expires_in':60}
+        with patch.object(activation,'request',return_value=code) as request:
+            result=activation.activate_trakt({'client_id':'app','client_secret':'private'},lambda *a:None,lambda:True,lambda delay:False)
+        self.assertIsNone(result)
+        self.assertEqual(request.call_count,1)
+
+    def test_activation_untrusted_host_and_denial_are_not_retried(self):
+        import activation
+        code={'verification_url':'https://untrusted.example/','user_code':'fixture','device_code':'private','interval':5,'expires_in':60}
+        with patch.object(activation,'request',return_value=code) as request:
+            with self.assertRaises(runtime.ApiError):activation.activate_trakt({'client_id':'app','client_secret':'private'},lambda *a:None,lambda:False,lambda delay:False)
+            self.assertEqual(request.call_count,1)
+        code['verification_url']='https://trakt.tv/activate'
+        with patch.object(activation,'request',side_effect=[code,runtime.ApiError(418)]) as request:
+            with self.assertRaises(runtime.ApiError):activation.activate_trakt({'client_id':'app','client_secret':'private'},lambda *a:None,lambda:False,lambda delay:False)
+            self.assertEqual(request.call_count,2)
+
 class StartupRegressionTests(unittest.TestCase):
     def test_settings_labels_have_bundled_localization(self):
         settings=ET.parse(ROOT/'resources/settings.xml').getroot()
@@ -198,5 +262,35 @@ class StartupRegressionTests(unittest.TestCase):
         report=dialog.textviewer.call_args.args[1]
         self.assertIn('ValueError',report)
         self.assertNotIn('secret-token',report)
+
+    def test_back_returns_to_parent_before_closing(self):
+        app,windows,dialog=self.load_app()
+        with patch.object(app,'flag',return_value=False),patch.object(app.catalog,'available',return_value=[]):
+            app.run(['plugin://plugin.video.lumen/','-1',''])
+        window=windows.instances[-1]
+        window.closed=False
+        window.history=[([],0)]
+        window.onAction(types.SimpleNamespace(getId=lambda:92))
+        self.assertFalse(window.was_closed)
+        self.assertEqual(window.history,[])
+        window.onAction(types.SimpleNamespace(getId=lambda:92))
+        self.assertTrue(window.was_closed)
+
+    def test_recovery_mode_skips_dashboard(self):
+        app,windows,dialog=self.load_app()
+        with patch.object(app,'setting',return_value='recovery'):
+            app.run(['plugin://plugin.video.lumen/','-1',''])
+        self.assertEqual(windows.instances,[])
+
+    def test_settings_action_routes_are_known_and_local(self):
+        import router
+        from urllib.parse import urlparse
+        tree=ET.parse(ROOT/'resources/settings.xml')
+        for setting in tree.findall('.//setting'):
+            if setting.get('type')!='action':continue
+            data=setting.findtext('data')
+            self.assertTrue(data.startswith('RunPlugin(plugin://plugin.video.lumen/?'))
+            route=urlparse(data[len('RunPlugin('):-1])
+            self.assertIn(router.parse(['plugin://lumen','1','?'+route.query])[0],router.ROUTES)
 
 if __name__=='__main__': unittest.main(verbosity=2)

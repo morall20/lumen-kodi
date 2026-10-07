@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.lumen" name="Lumen" version="0.1.1" provider-name="Lumen Personal Project">
+<addon id="plugin.video.lumen" name="Lumen" version="0.2.0" provider-name="Lumen Personal Project">
   <requires><import addon="xbmc.python" version="3.0.1" /></requires>
   <extension point="xbmc.python.pluginsource" library="default.py"><provides>video</provides></extension>
   <extension point="xbmc.service" library="service.py" />
@@ -8,6 +8,6 @@
     <description lang="en_GB">Kodi 21 development package. Independent account setup, CocoScrapers adapter, verified availability, device filters, list widgets and context actions. Read INSTALL.md for setup and limitations.</description>
     <platform>all</platform><license>MIT</license>
     <assets><icon>resources/media/icon.png</icon><fanart>resources/media/fanart.png</fanart></assets>
-    <news>Fix settings localization and skin Home.xml collision. Device validation pending.</news>
+    <news>Original framework migration: routing, settings actions, Trakt activation, device presets and nested Back navigation. Device validation pending.</news>
   </extension>
 </addon>
