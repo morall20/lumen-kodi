@@ -10,7 +10,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 - [Lumen Repository 1.0.0 ZIP](repo/repository.lumen/repository.lumen-1.0.0.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
-The repository ZIP points at this project's `main/repo/` distribution feed. **While this GitHub repository is private, Kodi cannot fetch that feed using this standard repository ZIP.** It does not contain a GitHub token or reuse a browser login. Manual download through your signed-in GitHub browser remains possible. Making the repository public requires the owner's approval; nothing in this project changes repository visibility.
+The repository ZIP points at this project's public `main/repo/` distribution feed. Kodi can download its index and packages without a GitHub login. No account credentials are included in the installer or source.
 
 ## Publishing a revision
 
@@ -25,6 +25,6 @@ The builder uses Python's standard library, deterministic ZIPs, version immutabi
 
 Private hosting can instead use a separately designed authenticated updater or public distribution-only repository. Neither is silently enabled by this package.
 
-## Framework migration branch
+## Framework migration
 
-The 0.2.0 original-code framework migration is isolated for device testing. See [implemented changes and remaining work](FRAMEWORK_MIGRATION.md). The repository installer points at main; this branch must be merged before its feed is distributed through that installer.
+The 0.2.0 original-code framework migration is published on main as a development update. See [implemented changes and remaining work](FRAMEWORK_MIGRATION.md). Its offline checks passed; device installation, rendering, live authentication and playback still need confirmation. Earlier numbered packages remain available for manual rollback.

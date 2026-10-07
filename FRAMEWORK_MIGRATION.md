@@ -22,9 +22,9 @@ A targeted static review covered the changed production modules, route invocatio
 
 ## Still pending
 
-Live Kodi 21.3 rendering, installation, service authorization, playback, performance and the new settings action dispatch must be confirmed on a device. Full FENLightPlus feature parity is not implemented: cloud management, download manager, autoplay/binge, skip-intro, broader tracking providers and full service coverage remain separate work. Real-Debrid activation remains manual API-token entry, TorBox/Premiumize/MDBList use personal keys, and AllDebrid playback remains pending. No shared application keys are supplied. This stage does not implement a global debrid arrival feed or change repository visibility.
+Live Kodi 21.3 rendering, installation, service authorization, playback, performance and the new settings action dispatch must be confirmed on a device. Full FENLightPlus feature parity is not implemented: cloud management, download manager, autoplay/binge, skip-intro, broader tracking providers and full service coverage remain separate work. Real-Debrid activation remains manual API-token entry, TorBox/Premiumize/MDBList use personal keys, and AllDebrid playback remains pending. No shared application keys are supplied. This stage does not implement a global debrid arrival feed. Repository visibility was separately changed to public by its owner.
 
-The `framework-migration` branch is isolated from main for device testing. Its ZIP is installed directly. The repository installer still points at main and still needs publicly accessible distribution hosting; publishing this branch does not fix private-hosting errors. Preserve version 0.1.1 for rollback and confirm the tested changes before merging the migration.
+The migration was merged to main after offline and GitHub Actions checks passed. The repository is public and its feed distributes the 0.2.0 development package. Kodi can install it from Lumen Repository or directly from its ZIP. Live device checks remain pending; earlier numbered packages are retained for manual rollback.
 
 ## Device check
 

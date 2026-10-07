@@ -1,10 +1,10 @@
 # Connect Kodi to Lumen updates
 
-## Current prerequisite
+## Public update feed
 
-This repository was created private. The standard Kodi repository ZIP below needs its distribution files accessible without a GitHub login. Until the owner approves public hosting, Kodi will return an access error/404 when refreshing this feed. A GitHub browser login does not authenticate Kodi. Do not embed passwords or personal access tokens in the ZIP.
+The GitHub repository is public, and the standard repository ZIP points to its `main/repo/` feed. No GitHub login is needed by Kodi. Download and install the repository ZIP once per device, then use Install from repository. Lumen 0.2.0 is the current development package; live device verification is still pending.
 
-## Install once on each device, after the feed is public
+## Install once on each device
 
 1. Download `repository.lumen-1.0.0.zip`. Keep the ZIP intact and copy it to the Shield or phone's Downloads folder.
 2. Kodi → Settings → System → Add-ons → enable **Unknown sources** for this personal repository.
@@ -16,9 +16,9 @@ This repository was created private. The standard Kodi repository ZIP below need
 
 Kodi updates on its scheduled checks or a manual check; it does not synchronize every Git commit immediately. Only new numbered packages in `repo/addons.xml` qualify. Each device keeps its own Lumen account credentials and settings; the repository does not sync accounts or device preferences.
 
-## Direct installation while private
+## Direct installation and troubleshooting
 
-Sign in as `morall20` at https://github.com/morall20/lumen-kodi, open `repo/plugin.video.lumen/`, download the versioned ZIP, copy it to the device, then use **Install from zip file**. Repeat manually for newer versions until an accessible feed is enabled.
+You can also download a versioned Lumen ZIP from `repo/plugin.video.lumen/` and use Install from zip file. If the repository previously reported server not reached, restart Kodi and use its Check for updates command. If it still fails, capture the exact message and Kodi log; public visibility resolves authentication errors but does not rule out device DNS, firewall, network or installation problems.
 
 ## Limitations and recovery
 
