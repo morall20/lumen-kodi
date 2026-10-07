@@ -14,6 +14,9 @@ from runtime import ADDON, read, write, credential, request, ApiError, preferenc
 from accounts import SERVICES, active_services, validate, resolve, tmdb, mdb, trakt
 import catalog
 import providers
+import activation
+import framework
+import router
 from diagnostics import failure_report
 
 DIALOG = xbmcgui.Dialog()
@@ -194,9 +197,9 @@ def context(media):
         trakt('sync/watchlist','POST',{kind:[{'ids':{'tmdb':media['id']}}]})
         notice('Trakt watchlist updated')
 
-def connect():
+def connect(selection=None):
     rows=['TMDB catalog key','Trakt activation','MDBList API key']+[SERVICES[s]+' account' for s in SERVICES]+['Select MDBList/Trakt widget lists','Disconnect an account','Trakt application setup']
-    i=DIALOG.select('Lumen · Accounts',rows)
+    i=selection if selection is not None else DIALOG.select('Lumen · Accounts',rows)
     if i<0:
         return
     if i==1:
@@ -204,27 +207,16 @@ def connect():
         if not app.get('client_id') or not app.get('client_secret'):
             DIALOG.ok('Trakt application setup','First choose Trakt application setup. Register a personal Lumen API app at trakt.tv/oauth/applications and enter its client ID and secret here, not in chat.')
             return
-        data=request('https://api.trakt.tv/oauth/device/code','POST',data={'client_id':app['client_id']})
-        p=xbmcgui.DialogProgress()
-        p.create('Activate Trakt','Visit %s\nCode: %s'%(data['verification_url'],data['user_code']))
-        deadline=time.monotonic()+int(data['expires_in'])
-        interval=max(1,int(data['interval']))
+        progress=xbmcgui.DialogProgress()
         try:
-            while time.monotonic()<deadline and not p.iscanceled():
-                if MONITOR.waitForAbort(interval):
-                    return
-                try:
-                    token=request('https://api.trakt.tv/oauth/device/token','POST',data={'code':data['device_code'],**app})
-                    credential('trakt',token)
-                    notice('Trakt connected')
-                    return
-                except ApiError as e:
-                    if e.status==429:
-                        interval=max(interval+5,e.retry)
-                    elif e.status!=400:
-                        raise
+            token=activation.activate_trakt(app,
+                lambda verification,code:progress.create('Activate Trakt','Visit %s\nCode: %s'%(verification,code)),
+                progress.iscanceled,MONITOR.waitForAbort)
+            if token:
+                credential('trakt',token)
+                notice('Trakt connected')
         finally:
-            p.close()
+            progress.close()
         return
     if i==7:
         definitions=[]
@@ -346,6 +338,7 @@ class Home(xbmcgui.WindowXMLDialog):
         self.running=False
         self.closed=False
         self.tab=10
+        self.history=[]
         self.getControl(2).setLabel('LUMEN  /  NEWLY AVAILABLE')
         self.render(catalog.available(preferences(),today=True))
         self.setFocusId(100 if self.media else 20)
@@ -356,10 +349,12 @@ class Home(xbmcgui.WindowXMLDialog):
         if not self.closed:
             self.getControl(3).setLabel(safe_label(text))
 
-    def render(self,media):
+    def render(self,media,remember=False):
         if self.closed:
             return
         control=self.getControl(100)
+        if remember:
+            self.history.append((list(self.media),control.getSelectedPosition()))
         old_position=control.getSelectedPosition()
         old_key=catalog.media_key(self.media[old_position]) if 0<=old_position<len(self.media) else None
         self.media=media
@@ -396,13 +391,14 @@ class Home(xbmcgui.WindowXMLDialog):
                 if 0<=i<len(self.media):
                     selected=self.media[i]
                     if selected['type'] in ('tv','season'):
-                        self.render(catalog.seasons(selected) if selected['type']=='tv' else catalog.episodes(selected))
+                        self.render(catalog.seasons(selected) if selected['type']=='tv' else catalog.episodes(selected),remember=True)
                     elif selected['type']=='collection':
-                        self.render(selected['members'])
+                        self.render(selected['members'],remember=True)
                     else:
                         play_sources(selected)
             elif id_ in (10,11,12,13,14,15):
                 self.tab=id_
+                self.history=[]
                 if id_==10:
                     self.render(catalog.available(preferences(),today=True))
                 elif id_==11:
@@ -443,8 +439,14 @@ class Home(xbmcgui.WindowXMLDialog):
     def onAction(self,action):
         id_=action.getId()
         if id_ in (9,10,92):
-            self.closed=True
-            self.close()
+            if self.history:
+                media,position=self.history.pop()
+                self.render(media)
+                self.getControl(100).selectItem(max(0,position))
+                self.setFocusId(100 if self.media else 20)
+            else:
+                self.closed=True
+                self.close()
         elif id_==117 and self.getFocusId()==100:
             i=self.getControl(100).getSelectedPosition()
             if 0<=i<len(self.media):
@@ -453,31 +455,60 @@ class Home(xbmcgui.WindowXMLDialog):
                 except Exception:
                     notice('Context action could not finish')
 
+def device_preset():
+    names=list(framework.DEVICES)
+    selected=DIALOG.select('Device starting preferences',[framework.DEVICES[name]['name'] for name in names])
+    if selected>=0 and DIALOG.yesno('Apply device preset','Replace quality and size preferences on this device? These are editable starting values, not hardware detection.'):
+        framework.apply_device(names[selected])
+        notice('Device preferences saved')
+
+def clear_caches():
+    if DIALOG.yesno('Clear cached discovery and searches','Clear cached searches and discovery? Accounts, resume positions, watchlists, providers and first-found history will be preserved.'):
+        framework.clear_cache()
+        notice('Discovery and search caches cleared')
+
+def account_route(params):
+    choices={'tmdb':0,'trakt':1,'mdb':2,'rd':3,'tb':4,'pm':5,'ad':6,'lists':7,'disconnect':8}
+    if params.get('service') not in choices:
+        raise ValueError('Unknown service')
+    connect(choices[params['service']])
+
+def show_home(force=False):
+    if not force and setting('home.mode','dashboard')=='recovery':
+        return
+    window=Home('script-lumen-home.xml',ADDON.getAddonInfo('path'),'Default','720p')
+    window.startup_error=None
+    try:
+        window.doModal()
+    finally:
+        window.closed=True
+    if window.startup_error:
+        DIALOG.textviewer('Lumen dashboard failed',window.startup_error+'\n\nUse the recovery menu below to access Accounts, Settings and Status.')
+    del window
+
 def run(argv):
-    q={k:v[0] for k,v in parse_qs(argv[2][1:] if len(argv)>2 else '').items()}
-    action=q.get('action','home')
-    if action=='home':
-        # Kodi checks the active skin first. Home.xml would load the skin's
-        # own home window instead of Lumen's packaged controls.
-        window=Home('script-lumen-home.xml',ADDON.getAddonInfo('path'),'Default','720p')
-        window.startup_error=None
-        try:
-            window.doModal()
-        finally:
-            window.closed=True
-        if window.startup_error:
-            DIALOG.textviewer('Lumen dashboard failed',window.startup_error+'\n\nOpen Lumen Information → Configure to access settings.')
-        del window
-    elif action=='accounts':
-        connect()
-    elif action=='providers':
-        provider_setup()
-    else:
-        notice('Unknown route')
+    action,params=router.parse(argv)
+    handlers={
+        'home':lambda p:show_home(force=p.get('force')=='true'),
+        'accounts':lambda p:connect(),
+        'providers':lambda p:provider_setup(),
+        'settings':lambda p:ADDON.openSettings(),
+        'account':account_route,
+        'device':lambda p:device_preset(),
+        'status':lambda p:DIALOG.textviewer('Lumen status',framework.status()),
+        'clear_cache':lambda p:clear_caches(),
+        'trakt_setup':lambda p:connect(9),
+    }
+    try:
+        router.dispatch(action,params,handlers)
+    except Exception as error:
+        report=failure_report(error,'route '+action)
+        xbmc.log(report,xbmc.LOGERROR)
+        DIALOG.textviewer('Lumen action failed',report+'\n\nReturn to Settings or Accounts to review setup.')
     if len(argv)>1 and str(argv[1]).lstrip('-').isdigit() and int(argv[1])>=0:
         handle=int(argv[1])
-        xbmcplugin.addDirectoryItem(handle,url('home'),xbmcgui.ListItem('Open Lumen dashboard'),True)
-        xbmcplugin.addDirectoryItem(handle,url('accounts'),xbmcgui.ListItem('Accounts'),True)
-        xbmcplugin.addDirectoryItem(handle,url('providers'),xbmcgui.ListItem('Providers'),True)
-        xbmcplugin.addDirectoryItem(handle,url('settings'),xbmcgui.ListItem('Settings'),True)
+        for label,action,values in [('Open Lumen dashboard','home',{'force':'true'}),('Accounts','accounts',{}),
+                                   ('Providers','providers',{}),('Settings','settings',{}),
+                                   ('Device preferences','device',{}),('Status','status',{}),('Clear caches','clear_cache',{})]:
+            xbmcplugin.addDirectoryItem(handle,url(action,**values),xbmcgui.ListItem(label),True)
         xbmcplugin.endOfDirectory(handle,succeeded=True,cacheToDisc=False)

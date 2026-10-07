@@ -42,3 +42,7 @@ FENLightPlus was used earlier as a feature reference, not as bundled executable 
 ## 0.1.1 startup/settings correction
 
 The first device report described a load failure and a blank settings window. Renamed the dashboard to `script-lumen-home.xml` because Kodi checks the active skin before the add-on fallback; `Home.xml` can load the skin home window with incompatible controls. Replaced category/setting labels with numeric localization IDs and bundled English strings. Added credential-free failure reports, guarded dashboard initialization, and settings routing that does not import the dashboard. These defects were identified from source; the user crash log was not available. The corrected ZIP still requires on-device confirmation. Repository hosting remains private pending owner approval.
+
+## 0.2.0 framework stage
+
+24 add-on behavioral checks plus 4 repository packaging tests pass offline. Added explicit-route rejection, device preset credential isolation, cache preservation, Trakt pending/cancel/denial behavior, settings action mapping, recovery mode and nested Back tests. This does not establish live Kodi/API compatibility or complete FENLightPlus feature parity. See FRAMEWORK_MIGRATION.md for the targeted review and device-check scope.

@@ -6,7 +6,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 
 ## Downloads
 
-- [Lumen 0.1.1 installation ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.1.1.zip)
+- [Lumen 0.2.0 migration ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.2.0.zip)
 - [Lumen Repository 1.0.0 ZIP](repo/repository.lumen/repository.lumen-1.0.0.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
@@ -24,3 +24,7 @@ The repository ZIP points at this project's `main/repo/` distribution feed. **Wh
 The builder uses Python's standard library, deterministic ZIPs, version immutability checks and SHA-256 inventories. HTTPS protects delivery. The `.md5` index file is only Kodi's feed change marker; hashes are not independent signatures or a full security audit. GitHub raw hosting does not provide Kodi's `content-sha256` HTTP header, so the repository uses `hashes=false` rather than claiming that Kodi checks that header.
 
 Private hosting can instead use a separately designed authenticated updater or public distribution-only repository. Neither is silently enabled by this package.
+
+## Framework migration branch
+
+The 0.2.0 original-code framework migration is isolated for device testing. See [implemented changes and remaining work](FRAMEWORK_MIGRATION.md). The repository installer points at main; this branch must be merged before its feed is distributed through that installer.

@@ -79,7 +79,7 @@ while not monitor.waitForAbort(.5):
         write('resume:'+media_key(media),{'position':0 if total and position/total>.9 else position,'total':total,'updated':time.time()})
         if flag('trakt.scrobble') and credential('trakt').get('access_token') and total>0:
             body={'movie' if media['type']=='movie' else 'episode':{'ids':{'tmdb':media['id']}},
-                  'progress':min(100,max(0,position/total*100)), 'app_version':'0.1.0'}
+                  'progress':min(100,max(0,position/total*100)), 'app_version':xbmcaddon.Addon('plugin.video.lumen').getAddonInfo('version')}
             try:
                 trakt('scrobble/'+kind,'POST',body)
             except Exception:
