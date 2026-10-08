@@ -251,3 +251,67 @@ msgctxt "#32117"
 msgid "Recovery menu"
 msgstr ""
 
+
+msgctxt "#32200"
+msgid "Release Radar"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Enable Release Radar"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Refresh interval (minutes)"
+msgstr ""
+
+msgctxt "#32203"
+msgid "Include movie announcements"
+msgstr ""
+
+msgctxt "#32204"
+msgid "Include episode announcements"
+msgstr ""
+
+msgctxt "#32205"
+msgid "Minimum announcement resolution"
+msgstr ""
+
+msgctxt "#32206"
+msgid "Preferred announcement resolution"
+msgstr ""
+
+msgctxt "#32207"
+msgid "Include HDR announcements"
+msgstr ""
+
+msgctxt "#32208"
+msgid "Include Dolby Vision announcements"
+msgstr ""
+
+msgctxt "#32209"
+msgid "Manage announcement sources and cache"
+msgstr ""
+
+msgctxt "#32210"
+msgid "SD / unknown"
+msgstr ""
+
+msgctxt "#32211"
+msgid "720p"
+msgstr ""
+
+msgctxt "#32212"
+msgid "1080p"
+msgstr ""
+
+msgctxt "#32213"
+msgid "2K / 1440p"
+msgstr ""
+
+msgctxt "#32214"
+msgid "4K / 2160p"
+msgstr ""
+
+msgctxt "#32215"
+msgid "No preference"
+msgstr ""

@@ -6,7 +6,7 @@ Personal development video add-on with a native cinematic dashboard, CocoScraper
 
 ## Downloads
 
-- [Lumen 0.2.1 development ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.2.1.zip)
+- [Lumen 0.3.0 development ZIP](repo/plugin.video.lumen/plugin.video.lumen-0.3.0.zip)
 - [Lumen Repository 1.0.1 ZIP](repo/repository.lumen/repository.lumen-1.0.1.zip)
 - [Kodi repository installation and updates](KODI_REPOSITORY_SETUP.md)
 
@@ -31,4 +31,10 @@ The 0.2.0 original-code framework migration is published on main as a developmen
 
 ### 0.2.1 startup fix
 
-Corrected a router import that ran before the add-on library path was initialized. Added two fresh-interpreter entrypoint regression tests that fail against 0.2.0 and pass against this patch. Install the 0.2.1 ZIP directly for immediate recovery if Kodi still offers a cached older package. Device confirmation is still required.
+Corrected a router import that ran before the add-on library path was initialized. Added two fresh-interpreter entrypoint regression tests that fail against 0.2.0 and pass against this patch. Install the 0.3.0 ZIP directly for immediate recovery if Kodi still offers a cached older package. Device confirmation is still required.
+
+### 0.3.0 Release Radar
+
+Native RSS/Atom and configurable JSON announcement discovery runs inside Kodi, without an external server. Cached Latest Releases, Movies, Episodes, 4K/HDR and Trailers views open without feed requests. Add permitted public HTTPS sources through Settings → Release Radar → Manage announcement sources and cache. There are no preconfigured feeds. Connect your own TMDB key for metadata; unmatched announcements can be matched manually before playback.
+
+Announcements and first-seen dates do not imply debrid availability. Ready to Watch retains the existing, separately verified availability view; selecting a matched title uses the existing source modules and debrid playback layer. Existing AllDebrid playback and other framework limitations remain. See [Release Radar setup, adapter format and limits](plugin.video.lumen/RELEASE_RADAR.md).

@@ -331,5 +331,81 @@
         </setting>
       </group>
     </category>
+    <category id="radar" label="32200">
+      <group id="9">
+        <setting id="radar.enabled" type="boolean" label="32201">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="radar.movies" type="boolean" label="32203">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="radar.tv" type="boolean" label="32204">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="radar.hdr" type="boolean" label="32207">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="radar.dv" type="boolean" label="32208">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="radar.interval" type="integer" label="32202">
+          <level>0</level>
+          <default>30</default>
+          <constraints>
+            <minimum>5</minimum>
+            <maximum>1440</maximum>
+            <step>5</step>
+          </constraints>
+          <control type="spinner" format="integer" />
+        </setting>
+        <setting id="radar.minimum" type="string" label="32205">
+          <level>0</level>
+          <default>720</default>
+          <constraints>
+            <options>
+              <option label="32210">0</option>
+              <option label="32211">720</option>
+              <option label="32212">1080</option>
+              <option label="32213">1440</option>
+              <option label="32214">2160</option>
+            </options>
+          </constraints>
+          <control type="list" format="string">
+            <heading>32205</heading>
+          </control>
+        </setting>
+        <setting id="radar.preferred" type="string" label="32206">
+          <level>0</level>
+          <default>2160p</default>
+          <constraints>
+            <options>
+              <option label="32215">any</option>
+              <option label="32211">720p</option>
+              <option label="32212">1080p</option>
+              <option label="32213">1440p</option>
+              <option label="32214">2160p</option>
+            </options>
+          </constraints>
+          <control type="list" format="string">
+            <heading>32206</heading>
+          </control>
+        </setting>
+        <setting id="radar.manage" type="action" label="32209">
+          <level>0</level>
+          <data>RunPlugin(plugin://plugin.video.lumen/?action=radar)</data>
+          <control type="button" format="action" />
+        </setting>
+      </group>
+    </category>
   </section>
 </settings>

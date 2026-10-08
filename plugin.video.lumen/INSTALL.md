@@ -95,3 +95,8 @@ Kodi → Add-ons → My add-ons → Video add-ons → Lumen → Uninstall. Remov
 ## 0.2.0 setup and recovery
 
 Kodi Information → Configure now has direct account setup/activation, provider, preset, cache and status actions. Tools and recovery → Startup navigation can choose Recovery menu. This is a setup fallback, not an alternative movie browser. Presets are editable starting values; account credentials remain local. Back navigation now returns through the current TV/list hierarchy. Full feature parity with FENLightPlus remains pending; see FRAMEWORK_MIGRATION.md in the source repository. The migration ZIP is installed directly while its branch is under device testing.
+
+
+## Release Radar (0.3.0)
+
+See [RELEASE_RADAR.md](RELEASE_RADAR.md) for public/permitted RSS/Atom and JSON source setup. No source is preconfigured. The dashboard displays saved announcement results while the native service refreshes stale data; metadata and playback setup remain separate.

@@ -17,6 +17,7 @@ import providers
 import activation
 import framework
 import router
+from modules import release_radar as radar, release_database as radar_db, release_metadata as radar_metadata
 from diagnostics import failure_report
 
 DIALOG = xbmcgui.Dialog()
@@ -57,8 +58,14 @@ def item(media):
     return li
 
 def trailer(media):
+    if media['type']=='announcement':
+        media=match_announcement(media)
+        if not media:
+            return
     kind='tv' if media['type'] in ('episode','tv','season') else 'movie'
-    videos=tmdb('%s/%s/videos'%(kind,media.get('show_id',media['id']))).get('results',[])
+    videos=media.get('trailers')
+    if videos is None:
+        videos=tmdb('%s/%s/videos'%(kind,media.get('show_id',media['id']))).get('results',[])
     videos=[v for v in videos if v.get('site')=='YouTube' and re.fullmatch(r'[A-Za-z0-9_-]{6,30}',v.get('key',''))]
     if not videos:
         DIALOG.ok('Trailer sources','No supported trailer sources were returned for this title.')
@@ -83,6 +90,10 @@ def choose_file(files):
     return files[i] if i>=0 else None
 
 def play_sources(media, fresh=False, options=False):
+    if media['type']=='announcement':
+        media=match_announcement(media)
+        if not media:
+            return
     prefs=preferences(media['type'])
     services=active_services()
     selected_modules=None
@@ -168,13 +179,22 @@ def play_sources(media, fresh=False, options=False):
         DIALOG.ok('Source unavailable','This source could not be resolved. Try another source.\n'+str(err))
 
 def context(media):
+    if media['type']=='announcement':
+        choice=DIALOG.contextmenu(['Match metadata and select sources','Match metadata and select trailer source','Announcement details'])
+        if choice==0:
+            play_sources(media)
+        elif choice==1:
+            trailer(media)
+        elif choice==2:
+            DIALOG.textviewer('Release announcement',safe_label(media['radar_parsed']['name'])+'\nPlayback availability has not been checked.')
+        return
     if media['type'] in ('tv','season','collection'):
         if media['type']=='tv':
             trailer(media)
         else:
             notice('Open this group to select an individual video')
         return
-    i=DIALOG.contextmenu(['Select sources','Select trailer source','Rescrape sources','Rescrape options…','Add/remove local watchlist','Add to Trakt watchlist'])
+    i=DIALOG.contextmenu(['Select sources','Select trailer source','Rescrape sources','Rescrape options…','Add/remove local watchlist','Add to Trakt watchlist','Metadata / release details'])
     if i==0:
         play_sources(media)
     elif i==1:
@@ -196,6 +216,14 @@ def context(media):
         kind='shows' if media['type'] in ('tv','season') else 'episodes' if media['type']=='episode' else 'movies'
         trakt('sync/watchlist','POST',{kind:[{'ids':{'tmdb':media['id']}}]})
         notice('Trakt watchlist updated')
+    elif i==6:
+        rows=[media['title'],media.get('plot',''),'Genres: '+', '.join(media.get('genres',[])),
+              'Cast: '+', '.join(media.get('cast',[])),'Runtime: '+str(media.get('runtime') or '?')+' minutes']
+        if media.get('radar_parsed'):
+            p=media['radar_parsed']
+            rows.extend([p['name'],' / '.join(str(p[k]) for k in ('resolution','source','audio','codec','releasegroup') if p[k]),
+                         'Announcement metadata does not prove playable availability.'])
+        DIALOG.textviewer('Lumen details','\n\n'.join(safe_label(r) for r in rows))
 
 def connect(selection=None):
     rows=['TMDB catalog key','Trakt activation','MDBList API key']+[SERVICES[s]+' account' for s in SERVICES]+['Select MDBList/Trakt widget lists','Disconnect an account','Trakt application setup']
@@ -339,10 +367,12 @@ class Home(xbmcgui.WindowXMLDialog):
         self.closed=False
         self.tab=10
         self.history=[]
-        self.getControl(2).setLabel('LUMEN  /  NEWLY AVAILABLE')
-        self.render(catalog.available(preferences(),today=True))
+        self.getControl(2).setLabel('LUMEN  /  RELEASE RADAR')
+        self.render(self.latest())
         self.setFocusId(100 if self.media else 20)
-        if flag('refresh_startup',True):
+        if flag('radar.enabled',True):
+            self.refresh_radar()
+        if flag('refresh_startup',True) and time.time()-read('last_refresh',0)>=max(5,int(setting('radar.interval','30')))*60:
             self.refresh()
 
     def status(self,text):
@@ -362,7 +392,23 @@ class Home(xbmcgui.WindowXMLDialog):
         control.addItems([item(m) for m in media])
         if old_key:
             control.selectItem(next((i for i,m in enumerate(media) if catalog.media_key(m)==old_key),0))
-        self.getControl(4).setLabel('First found within your configured providers · '+str(len(media))+' titles' if media else 'No verified titles in this view yet. Connect accounts and choose providers to begin.')
+        self.getControl(4).setLabel('Feed announcements + separately checked Ready to Watch · '+str(len(media))+' titles' if media else 'No cached titles here yet. Add Radar sources, connect TMDB, and choose playback providers.')
+
+    def latest(self):
+        ready=catalog.available(preferences(),today=True)
+        known={catalog.media_key(m) for m in ready}
+        return ready+[m for m in radar.items() if catalog.media_key(m) not in known]
+
+    def refresh_radar(self,force=False):
+        def done(result):
+            if self.closed:
+                return
+            self.status('Release Radar · '+result['state'].replace('_',' '))
+            if self.tab in (10,31) and not self.history:
+                self.render(self.latest())
+            elif self.tab==32 and not self.history:
+                self.render(radar.items('uhd'))
+        radar.start(force,lambda:self.closed or MONITOR.abortRequested(),done)
 
     def refresh(self):
         if self.running:
@@ -376,8 +422,8 @@ class Home(xbmcgui.WindowXMLDialog):
             try:
                 errors=catalog.refresh(preferences(),lambda:self.closed or MONITOR.abortRequested(),self.status)
                 self.status('Checked '+time.strftime('%H:%M')+(' · Partial refresh: open Refresh details' if errors else ' · Up to date within configured coverage'))
-                if not self.closed and self.tab==10:
-                    self.render(catalog.available(preferences(),today=True))
+                if not self.closed and self.tab in (10,31) and not self.history:
+                    self.render(self.latest())
             except Exception:
                 self.status('Refresh failed. Check Accounts and Providers.')
             finally:
@@ -394,19 +440,21 @@ class Home(xbmcgui.WindowXMLDialog):
                         self.render(catalog.seasons(selected) if selected['type']=='tv' else catalog.episodes(selected),remember=True)
                     elif selected['type']=='collection':
                         self.render(selected['members'],remember=True)
+                    elif self.tab==33:
+                        trailer(selected)
                     else:
                         play_sources(selected)
             elif id_ in (10,11,12,13,14,15):
                 self.tab=id_
                 self.history=[]
                 if id_==10:
-                    self.render(catalog.available(preferences(),today=True))
+                    self.render(self.latest())
                 elif id_==11:
-                    self.render(catalog.discovery('movie',setting('discovery','trending')))
+                    self.render(radar.items('movie') or read('catalog:movie:'+setting('discovery','trending'),[]))
                 elif id_==12:
-                    self.render(catalog.discovery('tv',setting('discovery','trending')))
+                    self.render(read('home_shows',[]) or read('catalog:tv:'+setting('discovery','trending'),[]))
                 elif id_==13:
-                    self.render(catalog.available(preferences('episode'),kind='episode'))
+                    self.render(radar.items('episode') or catalog.available(preferences('episode'),kind='episode'))
                 elif id_==14:
                     definitions=read('selected_lists',[])
                     self.render([{'id':str(d['id']),'type':'collection','title':d['name'],'members':catalog.list_items(d),
@@ -420,6 +468,13 @@ class Home(xbmcgui.WindowXMLDialog):
                         self.render(catalog.recent_history())
                     elif j>=2:
                         self.render(catalog.list_items(read('selected_lists',[])[j-2]))
+            elif id_ in (30,31,32,33):
+                self.tab=id_
+                self.history=[]
+                self.render(catalog.available(preferences()) if id_==30 else self.latest() if id_==31 else radar.items('uhd') if id_==32 else radar.items())
+            elif id_==34:
+                radar_setup()
+                self.refresh_radar()
             elif id_==20:
                 connect()
             elif id_==21:
@@ -427,9 +482,10 @@ class Home(xbmcgui.WindowXMLDialog):
             elif id_==22:
                 ADDON.openSettings()
             elif id_==23:
+                self.refresh_radar(force=True)
                 self.refresh()
             elif id_==24:
-                DIALOG.textviewer('Refresh details','\n'.join(read('refresh_errors',[])) or 'No errors recorded. Coverage is limited to the configured candidate pool.')
+                DIALOG.textviewer('Refresh details',radar.status()+'\n\nPlayback checks:\n'+('\n'.join(read('refresh_errors',[])) or 'No recorded errors. Coverage is limited to configured providers.'))
             elif id_==25:
                 self.closed=True
                 self.close()
@@ -473,6 +529,60 @@ def account_route(params):
         raise ValueError('Unknown service')
     connect(choices[params['service']])
 
+def match_announcement(media):
+    record=next((r for r in radar_db.records() if r['key']==media.get('radar_key')),None)
+    if not record:
+        return None
+    parsed=record['parsed']
+    kind='tv' if parsed['media_type']=='episode' else 'movie'
+    query=DIALOG.input('Match announcement title',defaultt=parsed['title'])
+    if not query:
+        return None
+    choices=tmdb('search/'+kind,{'query':query,'include_adult':'false'}).get('results',[])[:20]
+    index=DIALOG.select('Confirm metadata match',[safe_label(r.get('title') or r.get('name'))+' ('+(r.get('release_date') or r.get('first_air_date') or '?')[:4]+')' for r in choices])
+    if index<0:
+        return None
+    matched=radar_metadata.resolve(parsed,record.get('ids',{}),MONITOR.abortRequested,selected_id=choices[index]['id'])
+    if matched:
+        radar_db.save(record['key'],dict(record,media=matched))
+    return matched
+
+def radar_setup():
+    choice=DIALOG.select('Release Radar',['Add RSS/Atom feed','Add permitted JSON API','Enable/disable sources','Remove source','Refresh announcements now','Radar status','Clear Radar cache'])
+    if choice in (0,1):
+        name=DIALOG.input('Source display name')
+        endpoint=DIALOG.input('Public HTTPS announcement endpoint')
+        if not name or not endpoint:
+            return
+        config={'name':name,'url':endpoint.strip(),'kind':'rss' if choice==0 else 'api'}
+        if choice==1:
+            for key,title,default in [('items_field','Items field (blank for root array)','items'),('title_field','Release title field','title'),('date_field','Announcement date field (ISO or RSS date)','published')]:
+                config[key]=DIALOG.input(title,defaultt=default)
+            for key in ('tmdb','imdb','tvdb'):
+                config[key+'_field']=DIALOG.input('Optional '+key.upper()+' ID field (blank to omit)')
+        radar.add_source(config)
+        notice('Radar source added')
+    elif choice in (2,3):
+        configured=radar.sources()
+        names=[safe_label(s['name']) for s in configured]
+        if choice==2:
+            selected=DIALOG.multiselect('Enabled announcement sources',names,preselect=[i for i,s in enumerate(configured) if s.get('enabled')])
+            if selected is not None:
+                for i,s in enumerate(configured):
+                    s['enabled']=i in selected
+                write('radar.sources',configured)
+        else:
+            selected=DIALOG.select('Remove announcement source',names)
+            if selected>=0:
+                write('radar.sources',[s for i,s in enumerate(configured) if i!=selected])
+    elif choice==4:
+        radar.start(True,MONITOR.abortRequested,lambda r:notice('Radar · '+r['state'].replace('_',' ')))
+        notice('Radar refresh requested')
+    elif choice==5:
+        DIALOG.textviewer('Release Radar',radar.status())
+    elif choice==6 and DIALOG.yesno('Clear Release Radar cache','Clear announcements, first-seen history and metadata? Your source configuration, accounts and playback history will be preserved.'):
+        notice('Radar cache cleared' if radar_db.clear() else 'Radar is refreshing. Try again when it finishes.')
+
 def show_home(force=False):
     if not force and setting('home.mode','dashboard')=='recovery':
         return
@@ -498,6 +608,7 @@ def run(argv):
         'status':lambda p:DIALOG.textviewer('Lumen status',framework.status()),
         'clear_cache':lambda p:clear_caches(),
         'trakt_setup':lambda p:connect(9),
+        'radar':lambda p:radar_setup(),
     }
     try:
         router.dispatch(action,params,handlers)
@@ -509,6 +620,6 @@ def run(argv):
         handle=int(argv[1])
         for label,action,values in [('Open Lumen dashboard','home',{'force':'true'}),('Accounts','accounts',{}),
                                    ('Providers','providers',{}),('Settings','settings',{}),
-                                   ('Device preferences','device',{}),('Status','status',{}),('Clear caches','clear_cache',{})]:
+                                   ('Release Radar','radar',{}),('Device preferences','device',{}),('Status','status',{}),('Clear caches','clear_cache',{})]:
             xbmcplugin.addDirectoryItem(handle,url(action,**values),xbmcgui.ListItem(label),True)
         xbmcplugin.endOfDirectory(handle,succeeded=True,cacheToDisc=False)

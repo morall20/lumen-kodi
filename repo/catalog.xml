@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <addons>
-  <addon id="plugin.video.lumen" name="Lumen" version="0.2.1" provider-name="Lumen Personal Project">
+  <addon id="plugin.video.lumen" name="Lumen" version="0.3.0" provider-name="Lumen Personal Project">
     <requires>
       <import addon="xbmc.python" version="3.0.1" />
     </requires>
@@ -17,7 +17,7 @@
         <icon>resources/media/icon.png</icon>
         <fanart>resources/media/fanart.png</fanart>
       </assets>
-      <news>Fix cold-start import order. Fresh-interpreter launch regressions added; device validation pending.</news>
+      <news>Native Release Radar: cached RSS/Atom and JSON announcements, daily TMDB metadata, background TTL refresh and Kodi source controls.</news>
     </extension>
   </addon>
   <addon id="repository.lumen" name="Lumen Repository" version="1.0.1" provider-name="morall20">

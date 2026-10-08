@@ -50,3 +50,8 @@ The first device report described a load failure and a blank settings window. Re
 ## 0.2.1 entrypoint correction
 
 Fresh isolated Python interpreter tests reproduced ModuleNotFoundError for the router on both home and settings entry routes in 0.2.0. Its import occurred before the add-on library path was added. Moved the import inside the guarded launch after path setup. Both new entrypoint tests pass alongside the existing 24 add-on tests and 4 packaging tests (30 total). GUI/API boundaries are still mocked; live Kodi device validation remains required. The home entrypoint test validates dispatch with a stub application, while separate GUI-boundary tests exercise the dashboard.
+
+
+## 0.3.0 native Release Radar
+
+46 add-on checks and 4 repository checks pass offline. The 20 new checks cover release parsing, data-only RSS/Atom/JSON ingestion, external IDs and conservative identity, metadata TTL, HTTP size/conditional validators, concurrent SQLite refresh leases, cancellation, quality toggles, no provider/debrid calls during announcement refresh and cache isolation. Existing cold-start entrypoint and dashboard-boundary tests remain green. No live Kodi/device installation, real-feed/API acceptance or artwork rendering is asserted. See RELEASE_RADAR.md for source setup and limits.

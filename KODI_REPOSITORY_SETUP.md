@@ -2,7 +2,7 @@
 
 ## Public update feed
 
-The GitHub repository is public, and the standard repository ZIP points to its `main/repo/` feed. No GitHub login is needed by Kodi. Download and install the repository ZIP once per device, then use Install from repository. Lumen 0.2.1 is the current development package; live device verification is still pending.
+The GitHub repository is public, and the standard repository ZIP points to its `main/repo/` feed. No GitHub login is needed by Kodi. Download and install the repository ZIP once per device, then use Install from repository. Lumen 0.3.0 is the current development package; live device verification is still pending.
 
 ## Install once on each device
 
@@ -28,4 +28,4 @@ The separate CocoScrapers module and service account setup are covered in `plugi
 
 ## Recover from a cached 0.1.1 listing
 
-Install repository.lumen-1.0.1.zip over the older repository. It uses fresh catalog URLs while retaining the original add-on ID. Restart Kodi, select Lumen Repository → Check for updates, then open Lumen → Information → Versions and select 0.2.0 from Lumen Repository. If 0.2.0 is not offered, install its ZIP directly and report the installed repository version and exact error. The old 1.0.0 URLs are still generated for existing clients.
+Install repository.lumen-1.0.1.zip over the older repository. It uses fresh catalog URLs while retaining the original add-on ID. Restart Kodi, select Lumen Repository → Check for updates, then open Lumen → Information → Versions and select 0.3.0 from Lumen Repository. If 0.3.0 is not offered, install its ZIP directly and report the installed repository version and exact error. The old 1.0.0 URLs are still generated for existing clients.

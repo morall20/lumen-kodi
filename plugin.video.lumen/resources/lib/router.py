@@ -2,7 +2,7 @@
 from urllib.parse import parse_qs
 
 ROUTES = frozenset(('home', 'accounts', 'providers', 'settings', 'account',
-                    'device', 'status', 'clear_cache', 'trakt_setup'))
+                    'device', 'status', 'clear_cache', 'trakt_setup', 'radar'))
 
 
 def parse(argv):

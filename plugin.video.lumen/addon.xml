@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.lumen" name="Lumen" version="0.2.1" provider-name="Lumen Personal Project">
+<?xml version='1.0' encoding='utf-8'?>
+<addon id="plugin.video.lumen" name="Lumen" version="0.3.0" provider-name="Lumen Personal Project">
   <requires><import addon="xbmc.python" version="3.0.1" /></requires>
   <extension point="xbmc.python.pluginsource" library="default.py"><provides>video</provides></extension>
   <extension point="xbmc.service" library="service.py" />
@@ -8,6 +8,6 @@
     <description lang="en_GB">Kodi 21 development package. Independent account setup, CocoScrapers adapter, verified availability, device filters, list widgets and context actions. Read INSTALL.md for setup and limitations.</description>
     <platform>all</platform><license>MIT</license>
     <assets><icon>resources/media/icon.png</icon><fanart>resources/media/fanart.png</fanart></assets>
-    <news>Fix cold-start import order. Fresh-interpreter launch regressions added; device validation pending.</news>
+    <news>Native Release Radar: cached RSS/Atom and JSON announcements, daily TMDB metadata, background TTL refresh and Kodi source controls.</news>
   </extension>
 </addon>

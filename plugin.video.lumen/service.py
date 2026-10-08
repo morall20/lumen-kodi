@@ -13,6 +13,7 @@ sys.path.insert(0,os.path.join(xbmcaddon.Addon('plugin.video.lumen').getAddonInf
 from runtime import read, write, flag, credential
 from accounts import trakt
 from catalog import media_key
+from modules import release_radar
 
 events=queue.Queue(maxsize=30)
 
@@ -64,7 +65,12 @@ class Observer(xbmc.Player):
 
 player=Observer()
 monitor=xbmc.Monitor()
+radar_worker=None
+radar_checked=0
 while not monitor.waitForAbort(.5):
+    if time.monotonic()-radar_checked>60 and (radar_worker is None or not radar_worker.is_alive()):
+        radar_checked=time.monotonic()
+        radar_worker=release_radar.start(cancel=monitor.abortRequested)
     if player.media and player.isPlayingVideo():
         try:
             player.position=player.getTime()

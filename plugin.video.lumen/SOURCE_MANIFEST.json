@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "0.3.0",
   "target": "Kodi 21.3 Omega",
   "status": "development; live/device validation pending",
   "files": [
@@ -9,19 +9,23 @@
     },
     {
       "path": "INSTALL.md",
-      "sha256": "af07c534b80d9449b9cedba6e52c8c2c10d8f756436617117c6229c31c1fa635"
+      "sha256": "9d55bcae61b06f48d737c774dd03df2fef4c52514931390e80a6c7a423220980"
     },
     {
       "path": "LICENSE",
       "sha256": "c862fa77cc2f3568e7bb4c296457a0e4e2f92e658f9d9317d084669dbb0f83d2"
     },
     {
+      "path": "RELEASE_RADAR.md",
+      "sha256": "1e5fdea66e80bbf4e59bae4623f865b524ed11ad928d195e0f1421a987cfe8be"
+    },
+    {
       "path": "VALIDATION.md",
-      "sha256": "efd0bea843d7f0c7c2b753526e9bee14195c41a6f20bb1bb908028b3ff1444ef"
+      "sha256": "47b3a00344fa132e7c13dce88aff799183e0a7463ce9f6893d34e4617ea39954"
     },
     {
       "path": "addon.xml",
-      "sha256": "128b2936392d4e06ad845d303191d01ae6e76e23a5eded5da5db0a7d29346770"
+      "sha256": "7800e3ec0422b981c49c03fed4348450792b98a154d5f3eaef412d03a9da15ec"
     },
     {
       "path": "default.py",
@@ -32,8 +36,12 @@
       "sha256": "7b18126e1a0f34a9bcda46ca1b39178b41c039918ecb80c90855ff09b1417a1a"
     },
     {
+      "path": "developer/test_release_radar.py",
+      "sha256": "dd899a82df18962fc85cb82ffa512da1cd585c8b71c2193a53098b11304184ff"
+    },
+    {
       "path": "resources/language/resource.language.en_gb/strings.po",
-      "sha256": "4fcba4ecce3bf86900c74cc16c25009086c24f81c07036ca6d5c8026b8e8f360"
+      "sha256": "1adf6fe6f1ece35e5b68257e2200c5cdbed96fa2e24037dddb7dc6fa728ed680"
     },
     {
       "path": "resources/lib/accounts.py",
@@ -45,7 +53,7 @@
     },
     {
       "path": "resources/lib/app.py",
-      "sha256": "aabdf43c1d88e6af2020527955203c4fbd86f0e5a3c9c4fc3372e979f33fcdd7"
+      "sha256": "9059f5eab2095161cb55a6b6c0b09815cc0a15ef9781639ef2e70cd4b9a1a702"
     },
     {
       "path": "resources/lib/catalog.py",
@@ -64,16 +72,56 @@
       "sha256": "b907aea3f0ffc3d1c6e309088d3da5e8fb7bcbbd6eae3d711e90ea354afd75cb"
     },
     {
+      "path": "resources/lib/modules/__init__.py",
+      "sha256": "746bfcca85479d92348d8224508cbdf38a0fa9f03b52d226f3a52cf2ed26a7f5"
+    },
+    {
+      "path": "resources/lib/modules/release_database.py",
+      "sha256": "5c9587bd2cf6422ecd4c108253371a917589c6f2ceb8bbb35e6a2e8f435418e7"
+    },
+    {
+      "path": "resources/lib/modules/release_metadata.py",
+      "sha256": "e3b9ed95a3c76c32210960cb7133c41fa3fbba7535a0a916327d04934bab183f"
+    },
+    {
+      "path": "resources/lib/modules/release_parser.py",
+      "sha256": "4100c67385318440faafaeeae7d93ee89b398320aeab7c13a30442d203d94780"
+    },
+    {
+      "path": "resources/lib/modules/release_radar.py",
+      "sha256": "56f2b1bd43e85a1a81d9c3f3b343a5083eb1bfbdb631e85ac7b9313afa597fb4"
+    },
+    {
       "path": "resources/lib/providers.py",
       "sha256": "c97aa66b1dfa6fcfbab99b94527b94e02fb15ff9fb599ccb49679c6f24966292"
     },
     {
       "path": "resources/lib/router.py",
-      "sha256": "e9dc02a05337dc0ea85806ac80c4d27d6bfd951ec9fe52757302e65602f2cf4c"
+      "sha256": "62f90a730c03a109500072df5ae27d6089191d6f1c2cffd78c0e6a45132ee011"
     },
     {
       "path": "resources/lib/runtime.py",
       "sha256": "92d1497ffcf2822b930de7e2af4b2778010eb00035161ff003bc59e0ac16d689"
+    },
+    {
+      "path": "resources/lib/sources/__init__.py",
+      "sha256": "79b7b668a5fc1df89ec8835291270f0916b252de46c70891e93760a2c88231cc"
+    },
+    {
+      "path": "resources/lib/sources/releases/__init__.py",
+      "sha256": "0fb7e235f072b2514e769c5335519567927773d5df6984c88e2bfd1e42add564"
+    },
+    {
+      "path": "resources/lib/sources/releases/api.py",
+      "sha256": "bfb483e3c6dd094dc40a695d06f6033c42e3b27ae2e8683b7adeb586d8882e5a"
+    },
+    {
+      "path": "resources/lib/sources/releases/rss.py",
+      "sha256": "0d1f6286b740b7af6dade601c5aafbbb513a2c0224ed3342e4cc4afedf399c71"
+    },
+    {
+      "path": "resources/lib/sources/releases/transport.py",
+      "sha256": "ad7a003e9c27f182be1844758513e461b378773731aca152d96f576d8c15e52c"
     },
     {
       "path": "resources/media/button.png",
@@ -93,11 +141,11 @@
     },
     {
       "path": "resources/settings.xml",
-      "sha256": "d90b876b362e03e2dc0f2e79f3e96706193fc5000664de400dee479823f065bb"
+      "sha256": "197a74eb18919152a7d7787f6c1d43a2b4518cefdf47fca4804a372dc82fc5ca"
     },
     {
       "path": "resources/skins/Default/720p/script-lumen-home.xml",
-      "sha256": "c12d620cbba54bf82e14ef72049c2cec4dee1f9630d3e42816de9c2c592514a1"
+      "sha256": "8f43db2b3b0248a565b39f70c05f204a52d2e3f3f79893c9931985915f33933e"
     },
     {
       "path": "resources/skins/Default/media/button.png",
@@ -113,7 +161,7 @@
     },
     {
       "path": "service.py",
-      "sha256": "41810f1571c8c709479e0147ef98e482b17d30e940fca778af950a23808620a4"
+      "sha256": "e69a1d14c1797b072df5b2b8c37cb988a8cb99ef5c9a39b15e0a8fa4b99b9803"
     }
   ]
 }
